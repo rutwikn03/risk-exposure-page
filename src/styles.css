@@ -3,6 +3,8 @@ body {
   font-family: 'Open Sans', sans-serif;
   background: #fafafc;
   overflow-x: hidden;
+  color: #222222;
+  font-size: 14px;
 }
 
 /* ===== TOP NAV BAR ===== */
@@ -92,13 +94,13 @@ body {
   gap: 16px;
 }
 .header-section h1 {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
-  color: #000;
+  color: #222222;
   white-space: nowrap;
 }
 .header-section .product-type {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #2322f0;
 }
@@ -113,7 +115,7 @@ body {
   position: relative;
 }
 .tabs-section .tab {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #2322f0;
   padding: 6px 14px 10px;
@@ -151,15 +153,14 @@ body {
   margin-top: 4px;
 }
 .sub-tabs .sub-tab {
-  font-size: 14px;
-  color: #515151;
+  font-size: 13px;
+  color: #636363;
   cursor: pointer;
   text-decoration: none;
   padding: 6px 16px;
   line-height: 19px;
   border: 1px solid transparent;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  border-radius: 6px;
 }
 .sub-tabs .sub-tab:hover { color: #2322f0; }
 .sub-tabs .sub-tab.active {
@@ -408,7 +409,7 @@ body {
   background: #fff;
 }
 .detail-header {
-  background: #e8e7ff;
+  background: #EDEEFA;
   padding: 16px 20px 16px;
   min-height: 130px;
   display: flex;
@@ -438,13 +439,13 @@ body {
 }
 .location-title {
   font-size: 18px;
-  font-weight: 700;
-  color: #000;
+  font-weight: 600;
+  color: #222222;
   line-height: 1.3;
 }
 .location-address {
-  font-size: 11px;
-  color: #555;
+  font-size: 12px;
+  color: #636363;
   margin-top: 2px;
 }
 .detail-header-actions {
@@ -503,14 +504,14 @@ body {
 }
 .info-card-label {
   font-size: 13px;
-  font-weight: 700;
-  color: #000;
+  font-weight: 600;
+  color: #222222;
   line-height: 20px;
 }
 .info-card-value {
   font-size: 13px;
   font-weight: 400;
-  color: #000;
+  color: #636363;
   line-height: 18px;
 }
 
@@ -528,21 +529,21 @@ body {
   font-size: 13px;
 }
 .detail-table thead th {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 13px;
-  color: #000;
+  color: #222222;
   text-align: left;
   padding: 10px 8px;
   background: #fff;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #DCDCE5;
   white-space: nowrap;
 }
 .detail-table tbody td {
   padding: 8px 8px;
   background: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #EDEEFA;
   font-size: 13px;
-  color: #000;
+  color: #222222;
   vertical-align: middle;
 }
 .detail-table tbody td.center-cell { text-align: center; }
@@ -931,9 +932,9 @@ body {
 .edit-modal-premise { flex: 1; }
 .edit-modal-building { width: 332px; flex-shrink: 0; }
 .edit-modal-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #878787;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222222;
   margin-bottom: 10px;
 }
 .edit-modal-card {
@@ -950,21 +951,22 @@ body {
   gap: 4px;
 }
 .edit-modal-field label {
-  font-size: 14px;
-  font-weight: 700;
-  color: #222;
+  font-size: 13px;
+  font-weight: 600;
+  color: #222222;
 }
 .edit-modal-field label .req,
 .soi-header .req { color: #2322f0; font-weight: 600; }
 .edit-modal-field input {
-  height: 34px;
-  border: 1px solid #ddd;
+  height: 36px;
+  border: 1px solid #DCDCE5;
   background: #fff;
-  padding: 0 8px;
+  padding: 0 10px;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
-  color: #6b6b6b;
+  color: #636363;
+  border-radius: 4px;
 }
 .edit-modal-field input:focus { border-color: #2322f0; outline: none; color: #000; font-style: normal; }
 
@@ -1325,14 +1327,13 @@ body {
 /* Location cards (bigger) */
 .location-card {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #EDEEFA;
+  border-radius: 6px;
   padding: 10px 14px;
   margin-bottom: 8px;
   cursor: pointer;
-  transition: border-color 0.15s;
 }
-.location-card:hover { border-color: #b0b0ff; }
+.location-card:hover { border-color: #DCDEF5; }
 .location-card.active { border-color: #2322f0; border-width: 2px; }
 .location-card-top {
   display: flex;
@@ -1342,12 +1343,12 @@ body {
 }
 .location-card-name {
   font-size: 14px;
-  font-weight: 700;
-  color: #000;
+  font-weight: 600;
+  color: #222222;
 }
 .location-card-address {
-  font-size: 11px;
-  color: #555;
+  font-size: 12px;
+  color: #636363;
   line-height: 16px;
 }
 
@@ -1372,11 +1373,11 @@ body {
 
 /* Integer field validation */
 .field-error {
-  border-color: #cc0000 !important;
+  border-color: #B2002C !important;
 }
 .field-error-msg {
   font-size: 11px;
-  color: #cc0000;
+  color: #B2002C;
   margin-top: 2px;
 }
 
