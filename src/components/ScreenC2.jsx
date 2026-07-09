@@ -146,7 +146,7 @@ function AddSoiModal({ locationData, existingSoi, onClose, onSave }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
         <div className="edit-modal-header">
-          <h1 className="modal-main-heading">Add Coverage</h1>
+          <h1 className="modal-main-heading">Add Subject of Insurance</h1>
         </div>
         <div className="edit-modal-body">
         <h2 className="edit-modal-title">Premise Details</h2>
