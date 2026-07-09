@@ -70,7 +70,7 @@ export default function EditDetailsModal({ onClose, locationData, soiRows: initi
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
         <div className="edit-modal-header">
-          <h1 className="modal-main-heading">Edit Details</h1>
+          <h1 className="modal-main-heading">Edit Premise</h1>
         </div>
         <div className="edit-modal-body">
         {/* Top: Premise Details + Building Details */}

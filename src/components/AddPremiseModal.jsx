@@ -9,6 +9,7 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
     constructionType: '', roofingYear: '', yearBuilt: '',
   });
   const [buildingError, setBuildingError] = useState('');
+  const [buildingHint, setBuildingHint] = useState('');
   const [locNumError, setLocNumError] = useState(false);
   const [bldgNumError, setBldgNumError] = useState(false);
 
@@ -27,28 +28,41 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
       setLocNumError(false);
     }
     const locName = val ? 'Location ' + val : '';
-    updateLocField('location', locName);
 
     // Auto-populate if location exists
     if (val && /^\d+$/.test(val)) {
-      const existing = allLocations.find(l => l.location === 'Location ' + val);
-      if (existing) {
+      const existing = allLocations.filter(l => l.location === 'Location ' + val);
+      if (existing.length > 0) {
+        const first = existing[0];
         setLocFields(prev => ({
           ...prev,
           location: 'Location ' + val,
-          street: existing.street,
-          city: existing.city,
-          state: existing.state,
-          country: existing.country,
-          zip: existing.zip,
+          street: first.street,
+          city: first.city,
+          state: first.state,
+          country: first.country,
+          zip: first.zip,
         }));
+        // Auto-fill next available building number
+        const existingNums = existing
+          .map(l => parseInt(l.building.replace(/\D/g, ''), 10))
+          .filter(n => !isNaN(n));
+        const nextNum = Math.max(...existingNums) + 1;
+        setLocFields(prev => ({ ...prev, location: 'Location ' + val, building: 'Building ' + nextNum }));
+        setBuildingHint(`This is the next available number`);
+        setBuildingError('');
       } else {
         setLocFields(prev => ({
           ...prev,
           location: 'Location ' + val,
+          building: '',
           street: '', city: '', state: '', country: '', zip: '',
         }));
+        setBuildingHint('');
       }
+    } else {
+      updateLocField('location', locName);
+      setBuildingHint('');
     }
     // Clear building error when location changes
     setBuildingError('');
@@ -144,6 +158,7 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
                   />
                   {bldgNumError && <span className="field-error-msg">Only integers allowed</span>}
                   {buildingError && <span className="field-error-msg">{buildingError}</span>}
+                  {buildingHint && !buildingError && !bldgNumError && <span className="field-hint-msg">{buildingHint}</span>}
                 </div>
               </div>
               <div className="edit-modal-row">
@@ -194,7 +209,7 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
         {/* SOI Section */}
         <div className="soi-section-header">
           <span className="soi-section-title">Subjects of Insurance</span>
-          <img src="/add coverage.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={(e) => { e.preventDefault(); addSoiRow(); }} />
+          <img src="/add subject of insurance.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={(e) => { e.preventDefault(); addSoiRow(); }} />
         </div>
         <div className="edit-modal-soi">
 

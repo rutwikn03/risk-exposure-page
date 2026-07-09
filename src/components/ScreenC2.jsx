@@ -54,7 +54,7 @@ export default function ScreenC2({ locationName, locationData, soiData, onGoBack
       <div className="detail-table-section">
         <div className="detail-table-header-row">
           <span className="detail-table-heading">Property Coverages</span>
-          <img src="/add coverage.svg" alt="Add Coverage" className="add-coverage-btn" onClick={() => setShowAddSoi(true)} title="Add a new subject of insurance coverage to this premise" />
+          <img src="/add subject of insurance.svg" alt="Add Coverage" className="add-coverage-btn" onClick={() => setShowAddSoi(true)} title="Add a new subject of insurance coverage to this premise" />
         </div>
         <table className="detail-table">
           <thead>

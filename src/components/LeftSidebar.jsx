@@ -51,7 +51,11 @@ export default function LeftSidebar({ selectedLocation, onSelectLocation, onAddP
 
   return (
     <div className="left-sidebar">
-      <div className="left-sidebar-header">
+      <div className="left-sidebar-top">
+        <div className="left-sidebar-title-row">
+          <span className="left-sidebar-heading">Premises</span>
+          <img src="/add premise.svg" alt="Add Premise" className="add-premise-btn-img" onClick={onAddPremise} title="Add a new premise with location and building details" />
+        </div>
         <div className="search-row">
           <div className="search-box">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -65,50 +69,49 @@ export default function LeftSidebar({ selectedLocation, onSelectLocation, onAddP
           </div>
           <img src="/search.svg" alt="Search" className="search-btn-img" onClick={() => {}} />
         </div>
-      </div>
-      <div className="left-sidebar-filters" ref={filterRef}>
-        <div className="sidebar-filters-row">
-          <div className="sidebar-filter" onClick={() => setOpenFilter(openFilter === 'country' ? null : 'country')}>
-            <span className="sidebar-filter-label">COUNTRY</span>
-            <span className="sidebar-filter-value">{filterCountry || 'Any'}</span>
-            <span className="sidebar-filter-arrow">▾</span>
-            {openFilter === 'country' && (
-              <div className="sidebar-filter-menu">
-                <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterCountry(''); setOpenFilter(null); }}><em>Any</em></div>
-                {uniqueCountries.map(c => (
-                  <div key={c} className={`sidebar-filter-option${c === filterCountry ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterCountry(c); setOpenFilter(null); }}>{c}</div>
-                ))}
-              </div>
-            )}
+        <div className="left-sidebar-filters" ref={filterRef}>
+          <div className="sidebar-filters-row">
+            <div className="sidebar-filter" onClick={() => setOpenFilter(openFilter === 'year' ? null : 'year')}>
+              <span className="sidebar-filter-label">YR. BUILT</span>
+              <span className="sidebar-filter-value">{filterYear || 'Any'}</span>
+              <span className="sidebar-filter-arrow">▾</span>
+              {openFilter === 'year' && (
+                <div className="sidebar-filter-menu">
+                  <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterYear(''); setOpenFilter(null); }}><em>Any</em></div>
+                  {uniqueYears.map(y => (
+                    <div key={y} className={`sidebar-filter-option${y === filterYear ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterYear(y); setOpenFilter(null); }}>{y}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="sidebar-filter" onClick={() => setOpenFilter(openFilter === 'location' ? null : 'location')}>
+              <span className="sidebar-filter-label">LOCATION</span>
+              <span className="sidebar-filter-value">{filterLocation || 'Any'}</span>
+              <span className="sidebar-filter-arrow">▾</span>
+              {openFilter === 'location' && (
+                <div className="sidebar-filter-menu">
+                  <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterLocation(''); setOpenFilter(null); }}><em>Any</em></div>
+                  {uniqueLocations.map(l => (
+                    <div key={l} className={`sidebar-filter-option${l === filterLocation ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterLocation(l); setOpenFilter(null); }}>{l}</div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-          <img src="/add premise.svg" alt="Add Premise" className="add-premise-btn-img" onClick={onAddPremise} title="Add a new premise with location and building details" />
-        </div>
-        <div className="sidebar-filters-row">
-          <div className="sidebar-filter" onClick={() => setOpenFilter(openFilter === 'location' ? null : 'location')}>
-            <span className="sidebar-filter-label">LOCATION</span>
-            <span className="sidebar-filter-value">{filterLocation || 'Any'}</span>
-            <span className="sidebar-filter-arrow">▾</span>
-            {openFilter === 'location' && (
-              <div className="sidebar-filter-menu">
-                <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterLocation(''); setOpenFilter(null); }}><em>Any</em></div>
-                {uniqueLocations.map(l => (
-                  <div key={l} className={`sidebar-filter-option${l === filterLocation ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterLocation(l); setOpenFilter(null); }}>{l}</div>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="sidebar-filter" onClick={() => setOpenFilter(openFilter === 'year' ? null : 'year')}>
-            <span className="sidebar-filter-label">YR. BUILT</span>
-            <span className="sidebar-filter-value">{filterYear || 'Any'}</span>
-            <span className="sidebar-filter-arrow">▾</span>
-            {openFilter === 'year' && (
-              <div className="sidebar-filter-menu">
-                <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterYear(''); setOpenFilter(null); }}><em>Any</em></div>
-                {uniqueYears.map(y => (
-                  <div key={y} className={`sidebar-filter-option${y === filterYear ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterYear(y); setOpenFilter(null); }}>{y}</div>
-                ))}
-              </div>
-            )}
+          <div className="sidebar-filters-row">
+            <div className="sidebar-filter sidebar-filter-full" onClick={() => setOpenFilter(openFilter === 'country' ? null : 'country')}>
+              <span className="sidebar-filter-label">COUNTRY</span>
+              <span className="sidebar-filter-value">{filterCountry || 'Any'}</span>
+              <span className="sidebar-filter-arrow">▾</span>
+              {openFilter === 'country' && (
+                <div className="sidebar-filter-menu">
+                  <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); setFilterCountry(''); setOpenFilter(null); }}><em>Any</em></div>
+                  {uniqueCountries.map(c => (
+                    <div key={c} className={`sidebar-filter-option${c === filterCountry ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setFilterCountry(c); setOpenFilter(null); }}>{c}</div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
