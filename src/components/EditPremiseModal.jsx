@@ -29,6 +29,10 @@ export default function EditPremiseModal({ onClose, locationData, soiRows: initi
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="edit-modal-header">
+          <h1 className="modal-main-heading">Edit Premise</h1>
+        </div>
+        <div className="edit-modal-body">
         {/* Top: Premise Details + Building Details */}
         <div className="edit-modal-top">
           <div className="edit-modal-premise">
@@ -84,6 +88,9 @@ export default function EditPremiseModal({ onClose, locationData, soiRows: initi
         </div>
 
         {/* SOI Read-only Table */}
+        <div className="soi-section-header">
+          <span className="soi-section-title">Subjects of Insurance</span>
+        </div>
         <div className="edit-modal-soi">
           <div className="soi-grid soi-header">
             <span>Subject of Insurance <span className="req">*</span></span>
@@ -113,12 +120,12 @@ export default function EditPremiseModal({ onClose, locationData, soiRows: initi
           ))}
         </div>
 
+        </div>
+        {/* end edit-modal-body */}
+
         {/* Footer */}
         <div className="edit-modal-footer">
-          <div className="edit-modal-footer-left">
-            <button className="btn-cancel" onClick={onClose}>CANCEL</button>
-            <img src="/delete premise.svg" alt="Delete Premise" className="delete-premise-btn-img" onClick={onDeletePremise} />
-          </div>
+          <button className="btn-cancel" onClick={onClose}>CANCEL</button>
           <button className="btn-add-submit" onClick={handleSave}>EDIT</button>
         </div>
       </div>

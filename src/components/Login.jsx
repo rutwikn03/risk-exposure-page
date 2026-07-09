@@ -7,7 +7,7 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === 'test.ux' && password === 'appian.ux') {
+    if (username === '12' && password === '12') {
       setError('');
       onLogin();
     } else {

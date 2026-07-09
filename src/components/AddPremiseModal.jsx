@@ -112,6 +112,10 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="edit-modal-header">
+          <h1 className="modal-main-heading">Add Premise</h1>
+        </div>
+        <div className="edit-modal-body">
         {/* Top: Premise Details + Building Details */}
         <div className="edit-modal-top">
           <div className="edit-modal-premise">
@@ -188,8 +192,11 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
         </div>
 
         {/* SOI Section */}
+        <div className="soi-section-header">
+          <span className="soi-section-title">Subjects of Insurance</span>
+          <img src="/add coverage.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={(e) => { e.preventDefault(); addSoiRow(); }} />
+        </div>
         <div className="edit-modal-soi">
-          <img src="/add subject of insurance.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={(e) => { e.preventDefault(); addSoiRow(); }} />
 
           {/* Column headers */}
           <div className="soi-grid soi-header">
@@ -224,6 +231,9 @@ export default function AddPremiseModal({ onClose, onAddPremise, allLocations })
             </div>
           ))}
         </div>
+
+        </div>
+        {/* end edit-modal-body */}
 
         {/* Footer */}
         <div className="edit-modal-footer">

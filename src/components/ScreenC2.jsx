@@ -18,10 +18,11 @@ export default function ScreenC2({ locationName, locationData, soiData, onGoBack
             <div className="location-address">{address}</div>
           </div>
           <div className="detail-header-top-right">
-            <img src="/delete premise.svg" alt="Delete Premise" className="header-action-img" onClick={() => setShowDeleteWarning(true)} />
+            <img src="/delete_premise.svg" alt="Delete Premise" className="header-action-img" onClick={() => setShowDeleteWarning(true)} title="Delete this premise and all associated coverages" />
+            <img src="/edit details.svg" alt="Edit Details" className="header-action-img" onClick={onEditDetails} title="Edit premise details, building info, and coverages" />
           </div>
         </div>
-        {/* Info Cards + Edit Details */}
+        {/* Info Cards */}
         <div className="detail-header-bottom">
           <div className="info-cards">
             <div className="info-card">
@@ -46,12 +47,15 @@ export default function ScreenC2({ locationName, locationData, soiData, onGoBack
               </div>
             </div>
           </div>
-          <img src="/edir details.svg" alt="Edit Details" className="header-action-img" onClick={onEditDetails} />
         </div>
       </div>
 
       {/* Detail Table */}
       <div className="detail-table-section">
+        <div className="detail-table-header-row">
+          <span className="detail-table-heading">Property Coverages</span>
+          <img src="/add coverage.svg" alt="Add Coverage" className="add-coverage-btn" onClick={() => setShowAddSoi(true)} title="Add a new subject of insurance coverage to this premise" />
+        </div>
         <table className="detail-table">
           <thead>
             <tr>
@@ -84,7 +88,6 @@ export default function ScreenC2({ locationName, locationData, soiData, onGoBack
             ))}
           </tbody>
         </table>
-        <img src="/add subject of insurance.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={() => setShowAddSoi(true)} />
       </div>
 
       {/* Add SOI Modal */}
@@ -142,7 +145,10 @@ function AddSoiModal({ locationData, existingSoi, onClose, onSave }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        <div className="edit-modal-header">
+          <h1 className="modal-main-heading">Add Coverage</h1>
+        </div>
+        <div className="edit-modal-body">
         <h2 className="edit-modal-title">Premise Details</h2>
 
         {/* Location info */}
@@ -177,8 +183,11 @@ function AddSoiModal({ locationData, existingSoi, onClose, onSave }) {
         </div>
 
         {/* SOI Section */}
-        <div className="edit-modal-soi">
+        <div className="soi-section-header">
+          <span className="soi-section-title">Subjects of Insurance</span>
           <img src="/add subject of insurance.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={addSoiRow} />
+        </div>
+        <div className="edit-modal-soi">
 
           {/* Column headers */}
           <div className="soi-grid soi-header">
@@ -213,6 +222,7 @@ function AddSoiModal({ locationData, existingSoi, onClose, onSave }) {
             </div>
           ))}
         </div>
+        </div>
 
         {/* Footer */}
         <div className="edit-modal-footer">
@@ -222,7 +232,7 @@ function AddSoiModal({ locationData, existingSoi, onClose, onSave }) {
             const filledRows = soiRows.filter(r => r.subject || r.amount || r.valuation);
             onSave([...existingSoi, ...filledRows]);
             onClose();
-          }}>UPDATE</button>
+          }}>ADD</button>
         </div>
       </div>
     </div>

@@ -69,6 +69,10 @@ export default function EditDetailsModal({ onClose, locationData, soiRows: initi
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="edit-modal-header">
+          <h1 className="modal-main-heading">Edit Details</h1>
+        </div>
+        <div className="edit-modal-body">
         {/* Top: Premise Details + Building Details */}
         <div className="edit-modal-top">
           <div className="edit-modal-premise">
@@ -124,8 +128,11 @@ export default function EditDetailsModal({ onClose, locationData, soiRows: initi
         </div>
 
         {/* SOI Section */}
-        <div className="edit-modal-soi">
+        <div className="soi-section-header">
+          <span className="soi-section-title">Subjects of Insurance</span>
           <img src="/add subject of insurance.svg" alt="ADD Subject of Insurance" className="add-soi-btn-img" onClick={addSoiRow} />
+        </div>
+        <div className="edit-modal-soi">
 
           <div className="soi-grid soi-header">
             <span>Subject of Insurance <span className="req">*</span></span>
@@ -159,12 +166,12 @@ export default function EditDetailsModal({ onClose, locationData, soiRows: initi
           ))}
         </div>
 
+        </div>
+        {/* end edit-modal-body */}
+
         {/* Footer */}
         <div className="edit-modal-footer">
-          <div className="edit-modal-footer-left">
-            <button className="btn-cancel" onClick={onClose}>CANCEL</button>
-            <img src="/delete premise.svg" alt="Delete Premise" className="delete-premise-btn-img" onClick={() => setShowDeleteWarning(true)} />
-          </div>
+          <button className="btn-cancel" onClick={onClose}>CANCEL</button>
           <button className="btn-add-submit" onClick={handleSave}>EDIT</button>
         </div>
 
