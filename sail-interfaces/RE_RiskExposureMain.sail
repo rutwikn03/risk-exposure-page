@@ -408,39 +408,48 @@ a!localVariables(
             columns: {
               a!gridColumn(
                 label: "Subject of Insurance",
-                value: fv!row.subject
+                value: fv!row.subject,
+                align: "START"
               ),
               a!gridColumn(
                 label: "Amount",
-                value: fv!row.amount
+                value: fv!row.amount,
+                align: "END"
               ),
               a!gridColumn(
                 label: "Coins %",
-                value: fv!row.coins
+                value: fv!row.coins,
+                align: "END"
               ),
               a!gridColumn(
                 label: "Valuation",
-                value: fv!row.valuation
+                value: fv!row.valuation,
+                align: "START"
               ),
               a!gridColumn(
                 label: "Cause of Loss",
-                value: fv!row.cause
+                value: fv!row.cause,
+                align: "START"
               ),
               a!gridColumn(
                 label: "Inflation Guard",
-                value: fv!row.inflation
+                value: fv!row.inflation,
+                align: "END"
               ),
               a!gridColumn(
                 label: "DED",
-                value: fv!row.ded
+                value: fv!row.ded,
+                align: "END"
               ),
               a!gridColumn(
                 label: "BLKT#",
-                value: fv!row.blkt
+                value: fv!row.blkt,
+                align: "START"
               ),
               a!gridColumn(
                 label: "Forms & Conditions",
-                value: fv!row.forms
+                value: fv!row.forms,
+                align: "START"
               )
             },
             pageSize: 10,

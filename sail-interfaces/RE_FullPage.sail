@@ -114,8 +114,14 @@ a!localVariables(
       }
     ),
 
-    /* Divider */
-    a!cardLayout(padding: "NONE", marginBelow: "NONE", height: "SHORT", style: "#E0E0E0", showBorder: false),
+    /* Thin Divider Line */
+    a!columnsLayout(
+      columns: a!columnLayout(contents: {}),
+      marginBelow: "NONE",
+      showDividers: false,
+      marginAbove: "NONE"
+    ),
+    a!sectionLayout(label: "", marginBelow: "NONE", contents: {}),
 
     /* ===== RECORD HEADER ===== */
     a!cardLayout(
@@ -156,28 +162,37 @@ a!localVariables(
       }
     ),
 
-    /* Divider */
-    a!cardLayout(padding: "NONE", marginBelow: "NONE", height: "SHORT", style: "#DCDCE5", showBorder: false),
+    /* Thin Divider Line */
+    a!columnsLayout(
+      columns: a!columnLayout(contents: {}),
+      marginBelow: "NONE",
+      showDividers: false,
+      marginAbove: "NONE"
+    ),
+    a!sectionLayout(label: "", marginBelow: "NONE", contents: {}),
 
-    /* ===== SUB-TAB TOGGLE ===== */
+    /* ===== SUB-TAB TOGGLE (with top and bottom border) ===== */
+    /* NOTE: Button shape (SEMI_ROUNDED) is set in Site Branding, not per-button */
     a!cardLayout(
-      showBorder: false,
+      showBorder: true,
+      borderColor: "#DCDCE5",
       padding: "EVEN_LESS",
       marginBelow: "NONE",
+      shape: "SQUARED",
       contents: {
         a!buttonArrayLayout(
           buttons: {
             a!buttonWidget(
               label: "Loss History",
               size: "SMALL",
-              style: if(local!activeSubTab = "lossHistory", "SOLID", "OUTLINE"),
+              style: if(local!activeSubTab = "lossHistory", "SOLID", "LINK"),
               color: if(local!activeSubTab = "lossHistory", "ACCENT", "SECONDARY"),
               saveInto: a!save(local!activeSubTab, "lossHistory")
             ),
             a!buttonWidget(
               label: "Risk Exposure",
               size: "SMALL",
-              style: if(local!activeSubTab = "riskExposure", "SOLID", "OUTLINE"),
+              style: if(local!activeSubTab = "riskExposure", "SOLID", "LINK"),
               color: if(local!activeSubTab = "riskExposure", "ACCENT", "SECONDARY"),
               saveInto: a!save(local!activeSubTab, "riskExposure")
             )
@@ -205,11 +220,18 @@ a!localVariables(
 
       /* RISK EXPOSURE - Split Panel */
       a!columnsLayout(
-        columns: {
+            columns: {
           /* ===== LEFT PANEL ===== */
           a!columnLayout(
             width: "NARROW_PLUS",
             contents: {
+              a!cardLayout(
+                style: "#F5F5F7",
+                showBorder: false,
+                padding: "STANDARD",
+                shape: "SQUARED",
+                marginBelow: "NONE",
+                contents: {
               /* Header */
               a!sideBySideLayout(
                 alignVertical: "MIDDLE",
@@ -245,22 +267,32 @@ a!localVariables(
                 marginBelow: "STANDARD"
               ),
 
-              /* Premise Cards */
-              a!forEach(
-                items: local!filteredPremises,
-                expression: a!cardLayout(
-                  contents: {
-                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.location & " | " & fv!item.building, style: "STRONG"), marginBelow: "NONE"),
-                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.street & ", " & fv!item.city & ", " & fv!item.state, color: "SECONDARY", size: "SMALL"), marginBelow: "NONE"),
-                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.country & " - " & fv!item.zip, color: "SECONDARY", size: "SMALL"), marginBelow: "NONE")
-                  },
-                  link: a!dynamicLink(value: fv!item.id, saveInto: local!selectedPremiseId),
-                  padding: "STANDARD",
-                  shape: "SEMI_ROUNDED",
-                  marginBelow: "LESS",
-                  borderColor: if(fv!item.id = local!selectedPremiseId, "ACCENT", "#EDEEFA"),
-                  accessibilityText: if(fv!item.id = local!selectedPremiseId, "Selected", "")
-                )
+              /* Premise Cards - Scrollable, fits 16:9 desktop */
+              a!cardLayout(
+                height: "TALL",
+                showBorder: false,
+                padding: "NONE",
+                marginBelow: "NONE",
+                contents: {
+                  a!forEach(
+                    items: local!filteredPremises,
+                    expression: a!cardLayout(
+                      contents: {
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.location & " | " & fv!item.building, style: "STRONG"), marginBelow: "NONE"),
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.street & ", " & fv!item.city & ", " & fv!item.state, color: "SECONDARY", size: "SMALL"), marginBelow: "NONE"),
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: fv!item.country & " - " & fv!item.zip, color: "SECONDARY", size: "SMALL"), marginBelow: "NONE")
+                      },
+                      link: a!dynamicLink(value: fv!item.id, saveInto: local!selectedPremiseId),
+                      padding: "STANDARD",
+                      shape: "SEMI_ROUNDED",
+                      marginBelow: "LESS",
+                      borderColor: if(fv!item.id = local!selectedPremiseId, "ACCENT", "#EDEEFA"),
+                      accessibilityText: if(fv!item.id = local!selectedPremiseId, "Selected", "")
+                    )
+                  )
+                }
+              )
+                }
               )
             }
           ),
@@ -326,15 +358,15 @@ a!localVariables(
                 labelPosition: "COLLAPSED",
                 data: todatasubset(local!coverages, fv!pagingInfo),
                 columns: {
-                  a!gridColumn(label: "Subject of Insurance", value: fv!row.subject),
-                  a!gridColumn(label: "Amount", value: fv!row.amount),
-                  a!gridColumn(label: "Coins %", value: fv!row.coins),
-                  a!gridColumn(label: "Valuation", value: fv!row.valuation),
-                  a!gridColumn(label: "Cause of Loss", value: fv!row.cause),
-                  a!gridColumn(label: "Inflation Guard", value: fv!row.inflation),
-                  a!gridColumn(label: "DED", value: fv!row.ded),
-                  a!gridColumn(label: "BLKT#", value: fv!row.blkt),
-                  a!gridColumn(label: "Forms & Conditions", value: fv!row.forms)
+                  a!gridColumn(label: "Subject of Insurance", value: fv!row.subject, align: "START"),
+                  a!gridColumn(label: "Amount", value: fv!row.amount, align: "END"),
+                  a!gridColumn(label: "Coins %", value: fv!row.coins, align: "END"),
+                  a!gridColumn(label: "Valuation", value: fv!row.valuation, align: "START"),
+                  a!gridColumn(label: "Cause of Loss", value: fv!row.cause, align: "START"),
+                  a!gridColumn(label: "Inflation Guard", value: fv!row.inflation, align: "END"),
+                  a!gridColumn(label: "DED", value: fv!row.ded, align: "END"),
+                  a!gridColumn(label: "BLKT#", value: fv!row.blkt, align: "START"),
+                  a!gridColumn(label: "Forms & Conditions", value: fv!row.forms, align: "START")
                 },
                 pageSize: 10,
                 shadeAlternateRows: false
