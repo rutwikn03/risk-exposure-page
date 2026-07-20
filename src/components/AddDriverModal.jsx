@@ -95,7 +95,7 @@ export default function AddDriverModal({ onClose, onAdd }) {
                 <input type="text" placeholder="e.g. Mar 2019" value={fields.dateHired} onChange={e => update('dateHired', e.target.value)} />
               </div>
               <div className="edit-modal-field" style={{ width: 140 }}>
-                <label>Yr LIC (expiry)</label>
+                <label>Yr LIC (issued)</label>
                 <input type="text" placeholder="e.g. 2028" value={fields.licYear} onChange={e => update('licYear', e.target.value)} />
               </div>
             </div>
