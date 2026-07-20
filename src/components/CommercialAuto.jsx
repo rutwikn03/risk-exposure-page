@@ -4,6 +4,20 @@ import EditVehicleModal from './EditVehicleModal';
 import AddDriverModal from './AddDriverModal';
 import EditDriverModal from './EditDriverModal';
 
+// Calculate LIC renewal from license expiry year
+function calcRenewal(licYear) {
+  if (!licYear) return { renewalText: '-', renewalColor: '#999' };
+  const now = new Date();
+  const expiry = new Date(parseInt(licYear), 0, 1); // Jan 1 of that year
+  const diffMs = expiry - now;
+  const diffMonths = Math.round(diffMs / (1000 * 60 * 60 * 24 * 30.44));
+  if (diffMonths <= 0) return { renewalText: 'Expired', renewalColor: '#991B1B' };
+  if (diffMonths < 12) return { renewalText: `${diffMonths}m left`, renewalColor: '#92400E' };
+  const yrs = Math.floor(diffMonths / 12);
+  const mos = diffMonths % 12;
+  return { renewalText: `${yrs}y ${mos}m left`, renewalColor: '#117C00' };
+}
+
 const baseVehicles = [
   { id: 1, yearMakeModel: "2024 Ford Transit 250", bodyType: "Van", vin: "1FTBW2CM5RKA48291", address: "4521 Industrial Blvd, Dallas, TX 75207", stateLic: "TX", costNew: "$52,840", coverages: ["Liability-BI", "Liability-PD", "Collision", "Comprehensive"] },
   { id: 2, yearMakeModel: "2023 Chevy Silverado 2500HD", bodyType: "Truck", vin: "3GCPYFED2NG534812", address: "4521 Industrial Blvd, Dallas, TX 75207", stateLic: "TX", costNew: "$67,295", coverages: ["Liability-BI", "Collision", "Comprehensive", "Cargo"] },
@@ -32,30 +46,30 @@ const baseVehicles = [
 ];
 
 const baseDrivers = [
-  { id: 1, fullName: "Marcus D. Johnson", sex: "Male", licNum: "3849 2918 8291", stateLic: "TX", renewalText: "2y 4m left", renewalColor: "#117C00", yrsExp: "12", dateHired: "Mar 2019", address: "1847 Elm Creek Dr, Arlington, TX" },
-  { id: 2, fullName: "Sarah K. Okonkwo", sex: "Female", licNum: "D723 4567", stateLic: "CA", renewalText: "5m left", renewalColor: "#92400E", yrsExp: "8", dateHired: "Jun 2021", address: "2290 Sunset Blvd, LA, CA" },
-  { id: 3, fullName: "Robert A. Chen", sex: "Male", licNum: "C432 1010 98", stateLic: "IL", renewalText: "1y 9m left", renewalColor: "#117C00", yrsExp: "22", dateHired: "Jan 2017", address: "4410 N Ashland Ave, Chicago, IL" },
-  { id: 4, fullName: "Diana L. Morales", sex: "Female", licNum: "M893 4782 3", stateLic: "FL", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "5", dateHired: "Nov 2022", address: "780 Brickell Ave, Miami, FL" },
-  { id: 5, fullName: "James T. Whitfield", sex: "Male", licNum: "W293 8554 0", stateLic: "NY", renewalText: "3y 1m left", renewalColor: "#117C00", yrsExp: "15", dateHired: "Apr 2018", address: "312 E 84th St, New York, NY" },
-  { id: 6, fullName: "Priya R. Nair", sex: "Female", licNum: "N567 8210 9", stateLic: "TX", renewalText: "8m left", renewalColor: "#92400E", yrsExp: "3", dateHired: "Sep 2023", address: "6701 Forest Ln, Dallas, TX" },
-  { id: 7, fullName: "Anthony B. Rivera", sex: "Male", licNum: "R234 5678 1", stateLic: "GA", renewalText: "1y 2m left", renewalColor: "#117C00", yrsExp: "9", dateHired: "Feb 2020", address: "3420 Peachtree Rd NE, Atlanta, GA" },
-  { id: 8, fullName: "Michelle K. Thompson", sex: "Female", licNum: "T891 2345 6", stateLic: "TX", renewalText: "2y 11m left", renewalColor: "#117C00", yrsExp: "18", dateHired: "Aug 2016", address: "5500 Preston Rd, Dallas, TX" },
-  { id: 9, fullName: "David W. Park", sex: "Male", licNum: "P456 7890 2", stateLic: "CA", renewalText: "3m left", renewalColor: "#92400E", yrsExp: "6", dateHired: "Jan 2022", address: "1800 Ocean Ave, Santa Monica, CA" },
-  { id: 10, fullName: "Lisa M. O'Brien", sex: "Female", licNum: "O123 4567 8", stateLic: "IL", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "2", dateHired: "Mar 2024", address: "2200 W Division St, Chicago, IL" },
-  { id: 11, fullName: "Carlos E. Gutierrez", sex: "Male", licNum: "G678 9012 3", stateLic: "FL", renewalText: "4y 0m left", renewalColor: "#117C00", yrsExp: "25", dateHired: "Jun 2014", address: "900 Biscayne Blvd, Miami, FL" },
-  { id: 12, fullName: "Jennifer A. Walsh", sex: "Female", licNum: "W345 6789 0", stateLic: "NY", renewalText: "1y 5m left", renewalColor: "#117C00", yrsExp: "11", dateHired: "Oct 2019", address: "450 W 33rd St, New York, NY" },
-  { id: 13, fullName: "Kevin R. Patel", sex: "Male", licNum: "P789 0123 4", stateLic: "TX", renewalText: "7m left", renewalColor: "#92400E", yrsExp: "4", dateHired: "May 2023", address: "2100 Main St, Houston, TX" },
-  { id: 14, fullName: "Amanda J. Foster", sex: "Female", licNum: "F012 3456 7", stateLic: "CO", renewalText: "2y 8m left", renewalColor: "#117C00", yrsExp: "14", dateHired: "Sep 2018", address: "750 Corporate Dr, Denver, CO" },
-  { id: 15, fullName: "William H. Nakamura", sex: "Male", licNum: "N890 1234 5", stateLic: "CA", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "7", dateHired: "Dec 2020", address: "600 Harbor Blvd, Long Beach, CA" },
-  { id: 16, fullName: "Stephanie L. Adams", sex: "Female", licNum: "A567 8901 2", stateLic: "TN", renewalText: "3y 6m left", renewalColor: "#117C00", yrsExp: "20", dateHired: "Mar 2015", address: "3400 Trucking Ln, Memphis, TN" },
-  { id: 17, fullName: "Brian P. Kowalski", sex: "Male", licNum: "K234 5678 9", stateLic: "PA", renewalText: "11m left", renewalColor: "#92400E", yrsExp: "10", dateHired: "Jul 2020", address: "1500 Market St, Philadelphia, PA" },
-  { id: 18, fullName: "Rachel N. Singh", sex: "Female", licNum: "S901 2345 6", stateLic: "TX", renewalText: "2y 1m left", renewalColor: "#117C00", yrsExp: "16", dateHired: "Apr 2017", address: "8900 I-40 West, Amarillo, TX" },
-  { id: 19, fullName: "Thomas G. Fitzgerald", sex: "Male", licNum: "F678 9012 3", stateLic: "IL", renewalText: "6m left", renewalColor: "#92400E", yrsExp: "1", dateHired: "Jan 2025", address: "1200 Logistics Pkwy, Chicago, IL" },
-  { id: 20, fullName: "Olivia C. Yamamoto", sex: "Female", licNum: "Y345 6789 0", stateLic: "FL", renewalText: "4y 2m left", renewalColor: "#117C00", yrsExp: "19", dateHired: "Nov 2015", address: "9100 SW 40th St, Miami, FL" },
-  { id: 21, fullName: "Derek M. Sullivan", sex: "Male", licNum: "S012 3456 7", stateLic: "NY", renewalText: "1y 0m left", renewalColor: "#117C00", yrsExp: "13", dateHired: "Aug 2019", address: "789 Broadway, New York, NY" },
-  { id: 22, fullName: "Maria T. Vasquez", sex: "Female", licNum: "V789 0123 4", stateLic: "CA", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "8", dateHired: "Feb 2021", address: "890 Commerce Way, Los Angeles, CA" },
-  { id: 23, fullName: "Patrick J. Murphy", sex: "Male", licNum: "M456 7890 1", stateLic: "GA", renewalText: "2y 6m left", renewalColor: "#117C00", yrsExp: "17", dateHired: "Jun 2016", address: "7820 Peachtree Rd, Atlanta, GA" },
-  { id: 24, fullName: "Nicole R. Kim", sex: "Female", licNum: "K123 4567 8", stateLic: "TX", renewalText: "9m left", renewalColor: "#92400E", yrsExp: "6", dateHired: "Apr 2022", address: "4521 Industrial Blvd, Dallas, TX" },
+  { id: 1, fullName: "Marcus D. Johnson", sex: "Male", licNum: "3849 2918 8291", stateLic: "TX", licYear: "2029", yrsExp: "12", dateHired: "Mar 2019", address: "1847 Elm Creek Dr, Arlington, TX" },
+  { id: 2, fullName: "Sarah K. Okonkwo", sex: "Female", licNum: "D723 4567", stateLic: "CA", licYear: "2027", yrsExp: "8", dateHired: "Jun 2021", address: "2290 Sunset Blvd, LA, CA" },
+  { id: 3, fullName: "Robert A. Chen", sex: "Male", licNum: "C432 1010 98", stateLic: "IL", licYear: "2028", yrsExp: "22", dateHired: "Jan 2017", address: "4410 N Ashland Ave, Chicago, IL" },
+  { id: 4, fullName: "Diana L. Morales", sex: "Female", licNum: "M893 4782 3", stateLic: "FL", licYear: "2025", yrsExp: "5", dateHired: "Nov 2022", address: "780 Brickell Ave, Miami, FL" },
+  { id: 5, fullName: "James T. Whitfield", sex: "Male", licNum: "W293 8554 0", stateLic: "NY", licYear: "2030", yrsExp: "15", dateHired: "Apr 2018", address: "312 E 84th St, New York, NY" },
+  { id: 6, fullName: "Priya R. Nair", sex: "Female", licNum: "N567 8210 9", stateLic: "TX", licYear: "2027", yrsExp: "3", dateHired: "Sep 2023", address: "6701 Forest Ln, Dallas, TX" },
+  { id: 7, fullName: "Anthony B. Rivera", sex: "Male", licNum: "R234 5678 1", stateLic: "GA", licYear: "2028", yrsExp: "9", dateHired: "Feb 2020", address: "3420 Peachtree Rd NE, Atlanta, GA" },
+  { id: 8, fullName: "Michelle K. Thompson", sex: "Female", licNum: "T891 2345 6", stateLic: "TX", licYear: "2029", yrsExp: "18", dateHired: "Aug 2016", address: "5500 Preston Rd, Dallas, TX" },
+  { id: 9, fullName: "David W. Park", sex: "Male", licNum: "P456 7890 2", stateLic: "CA", licYear: "2026", yrsExp: "6", dateHired: "Jan 2022", address: "1800 Ocean Ave, Santa Monica, CA" },
+  { id: 10, fullName: "Lisa M. O'Brien", sex: "Female", licNum: "O123 4567 8", stateLic: "IL", licYear: "2025", yrsExp: "2", dateHired: "Mar 2024", address: "2200 W Division St, Chicago, IL" },
+  { id: 11, fullName: "Carlos E. Gutierrez", sex: "Male", licNum: "G678 9012 3", stateLic: "FL", licYear: "2030", yrsExp: "25", dateHired: "Jun 2014", address: "900 Biscayne Blvd, Miami, FL" },
+  { id: 12, fullName: "Jennifer A. Walsh", sex: "Female", licNum: "W345 6789 0", stateLic: "NY", licYear: "2028", yrsExp: "11", dateHired: "Oct 2019", address: "450 W 33rd St, New York, NY" },
+  { id: 13, fullName: "Kevin R. Patel", sex: "Male", licNum: "P789 0123 4", stateLic: "TX", licYear: "2027", yrsExp: "4", dateHired: "May 2023", address: "2100 Main St, Houston, TX" },
+  { id: 14, fullName: "Amanda J. Foster", sex: "Female", licNum: "F012 3456 7", stateLic: "CO", licYear: "2029", yrsExp: "14", dateHired: "Sep 2018", address: "750 Corporate Dr, Denver, CO" },
+  { id: 15, fullName: "William H. Nakamura", sex: "Male", licNum: "N890 1234 5", stateLic: "CA", licYear: "2025", yrsExp: "7", dateHired: "Dec 2020", address: "600 Harbor Blvd, Long Beach, CA" },
+  { id: 16, fullName: "Stephanie L. Adams", sex: "Female", licNum: "A567 8901 2", stateLic: "TN", licYear: "2030", yrsExp: "20", dateHired: "Mar 2015", address: "3400 Trucking Ln, Memphis, TN" },
+  { id: 17, fullName: "Brian P. Kowalski", sex: "Male", licNum: "K234 5678 9", stateLic: "PA", licYear: "2027", yrsExp: "10", dateHired: "Jul 2020", address: "1500 Market St, Philadelphia, PA" },
+  { id: 18, fullName: "Rachel N. Singh", sex: "Female", licNum: "S901 2345 6", stateLic: "TX", licYear: "2028", yrsExp: "16", dateHired: "Apr 2017", address: "8900 I-40 West, Amarillo, TX" },
+  { id: 19, fullName: "Thomas G. Fitzgerald", sex: "Male", licNum: "F678 9012 3", stateLic: "IL", licYear: "2026", yrsExp: "1", dateHired: "Jan 2025", address: "1200 Logistics Pkwy, Chicago, IL" },
+  { id: 20, fullName: "Olivia C. Yamamoto", sex: "Female", licNum: "Y345 6789 0", stateLic: "FL", licYear: "2030", yrsExp: "19", dateHired: "Nov 2015", address: "9100 SW 40th St, Miami, FL" },
+  { id: 21, fullName: "Derek M. Sullivan", sex: "Male", licNum: "S012 3456 7", stateLic: "NY", licYear: "2028", yrsExp: "13", dateHired: "Aug 2019", address: "789 Broadway, New York, NY" },
+  { id: 22, fullName: "Maria T. Vasquez", sex: "Female", licNum: "V789 0123 4", stateLic: "CA", licYear: "2025", yrsExp: "8", dateHired: "Feb 2021", address: "890 Commerce Way, Los Angeles, CA" },
+  { id: 23, fullName: "Patrick J. Murphy", sex: "Male", licNum: "M456 7890 1", stateLic: "GA", licYear: "2029", yrsExp: "17", dateHired: "Jun 2016", address: "7820 Peachtree Rd, Atlanta, GA" },
+  { id: 24, fullName: "Nicole R. Kim", sex: "Female", licNum: "K123 4567 8", stateLic: "TX", licYear: "2027", yrsExp: "6", dateHired: "Apr 2022", address: "4521 Industrial Blvd, Dallas, TX" },
 ];
 
 const bodyTypeColors = { Van: "#2322F0", Truck: "#117C00", Sedan: "#636363", Semi: "#92400E", SUV: "#555", "Box Truck": "#333" };
@@ -70,13 +84,15 @@ export default function CommercialAuto() {
   const [driverSearch, setDriverSearch] = useState("");
   const [filterBodyType, setFilterBodyType] = useState("");
   const [filterVState, setFilterVState] = useState("");
-  const [filterCountry, setFilterCountry] = useState("");
   const [filterDState, setFilterDState] = useState("");
   const [filterExp, setFilterExp] = useState("");
   const [showAddVehicle, setShowAddVehicle] = useState(false);
   const [showEditVehicle, setShowEditVehicle] = useState(false);
   const [showAddDriver, setShowAddDriver] = useState(false);
   const [showEditDriver, setShowEditDriver] = useState(false);
+  const [editingVehicle, setEditingVehicle] = useState(null);
+  const [editingDriver, setEditingDriver] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // { type: 'vehicle'|'driver', id, name }
 
   const filteredVehicles = useMemo(() => {
     let result = vehicles;
@@ -170,39 +186,31 @@ export default function CommercialAuto() {
         <div className="ca-right-content">
           {/* Sticky header area */}
           <div className="ca-right-sticky">
-            {/* Header row */}
+            {/* Header row: Title left, Add + Edit + View toggle right */}
             <div className="ca-content-header">
               <h2 className="ca-content-title">
                 {activeNav === "vehicles" ? "Vehicle Information" : "Driver Information"}
               </h2>
-              <div className="ca-view-toggle">
-                <button
-                  className={`ca-toggle-btn ${activeView === "cards" ? "ca-toggle-btn--active" : ""}`}
-                  onClick={() => setActiveView("cards")}
-                >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                    <rect x="1" y="1" width="6" height="6" rx="1" />
-                    <rect x="9" y="1" width="6" height="6" rx="1" />
-                    <rect x="1" y="9" width="6" height="6" rx="1" />
-                    <rect x="9" y="9" width="6" height="6" rx="1" />
-                  </svg>
-                  Cards
-                </button>
-                <button
-                  className={`ca-toggle-btn ${activeView === "grid" ? "ca-toggle-btn--active" : ""}`}
-                  onClick={() => setActiveView("grid")}
-                >
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                    <rect x="1" y="2" width="14" height="2" rx="0.5" />
-                    <rect x="1" y="7" width="14" height="2" rx="0.5" />
-                    <rect x="1" y="12" width="14" height="2" rx="0.5" />
-                  </svg>
-                  Grid
-                </button>
+              <div className="ca-header-actions">
+                <img
+                  src={activeNav === "vehicles" ? "/add vehicle.svg" : "/add driver.svg"}
+                  alt={activeNav === "vehicles" ? "Add Vehicle" : "Add Driver"}
+                  className="add-premise-btn-img"
+                  onClick={() => activeNav === "vehicles" ? setShowAddVehicle(true) : setShowAddDriver(true)}
+                  title={activeNav === "vehicles" ? "Add a new vehicle" : "Add a new driver"}
+                />
+                <img
+                  src="/edit button.svg"
+  
+                  alt={activeNav === "vehicles" ? "Edit Vehicle Details" : "Edit Driver Details"}
+                  className="header-action-img"
+                  onClick={() => activeNav === "vehicles" ? setShowEditVehicle(true) : setShowEditDriver(true)}
+                  title={activeNav === "vehicles" ? "Edit vehicle details" : "Edit driver details"}
+                />
               </div>
             </div>
 
-          {/* Search + Filters - same style as property page */}
+          {/* Search + Filters + View Toggle inline */}
           {activeNav === "vehicles" ? (
             <div className="ca-filter-bar">
               <div className="search-row">
@@ -219,7 +227,16 @@ export default function CommercialAuto() {
               <div className="sidebar-filters-row">
                 <FilterDropdown label="BODY TYPE" value={filterBodyType} options={["Van","Truck","Sedan","SUV","Semi","Box Truck"]} onChange={setFilterBodyType} />
                 <FilterDropdown label="STATE LIC" value={filterVState} options={["TX","CA","IL","FL","NY","GA","CO","TN","PA","AZ"]} onChange={setFilterVState} />
-                <FilterDropdown label="COUNTRY" value={filterCountry} options={["USA","Canada","Mexico"]} onChange={setFilterCountry} />
+                <div className="ca-view-toggle">
+                  <button className={`ca-toggle-btn ${activeView === "cards" ? "ca-toggle-btn--active" : ""}`} onClick={() => setActiveView("cards")}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1" /><rect x="9" y="1" width="6" height="6" rx="1" /><rect x="1" y="9" width="6" height="6" rx="1" /><rect x="9" y="9" width="6" height="6" rx="1" /></svg>
+                    Cards
+                  </button>
+                  <button className={`ca-toggle-btn ${activeView === "grid" ? "ca-toggle-btn--active" : ""}`} onClick={() => setActiveView("grid")}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2" rx="0.5" /><rect x="1" y="7" width="14" height="2" rx="0.5" /><rect x="1" y="12" width="14" height="2" rx="0.5" /></svg>
+                    Grid
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
@@ -238,28 +255,19 @@ export default function CommercialAuto() {
               <div className="sidebar-filters-row">
                 <FilterDropdown label="STATE LIC" value={filterDState} options={["TX","CA","IL","FL","NY","GA","CO","TN","PA","AZ"]} onChange={setFilterDState} />
                 <FilterDropdown label="EXPERIENCE" value={filterExp} options={["0-5","6-10","11-15","16-20","20+"]} labels={["0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"]} onChange={setFilterExp} />
+                <div className="ca-view-toggle">
+                  <button className={`ca-toggle-btn ${activeView === "cards" ? "ca-toggle-btn--active" : ""}`} onClick={() => setActiveView("cards")}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1" /><rect x="9" y="1" width="6" height="6" rx="1" /><rect x="1" y="9" width="6" height="6" rx="1" /><rect x="9" y="9" width="6" height="6" rx="1" /></svg>
+                    Cards
+                  </button>
+                  <button className={`ca-toggle-btn ${activeView === "grid" ? "ca-toggle-btn--active" : ""}`} onClick={() => setActiveView("grid")}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="2" rx="0.5" /><rect x="1" y="7" width="14" height="2" rx="0.5" /><rect x="1" y="12" width="14" height="2" rx="0.5" /></svg>
+                    Grid
+                  </button>
+                </div>
               </div>
             </div>
           )}
-
-          {/* Action buttons - Add left (image btn), Edit far right (image btn) */}
-          <div className="ca-actions">
-            <img
-              src={activeNav === "vehicles" ? "/add vehicle.svg" : "/add driver.svg"}
-              alt={activeNav === "vehicles" ? "Add Vehicle" : "Add Driver"}
-              className="add-premise-btn-img"
-              onClick={() => activeNav === "vehicles" ? setShowAddVehicle(true) : setShowAddDriver(true)}
-              title={activeNav === "vehicles" ? "Add a new vehicle" : "Add a new driver"}
-            />
-            <div className="ca-actions-spacer" />
-            <img
-              src="/edit button.svg"
-              alt={activeNav === "vehicles" ? "Edit Vehicle Details" : "Edit Driver Details"}
-              className="header-action-img"
-              onClick={() => activeNav === "vehicles" ? setShowEditVehicle(true) : setShowEditDriver(true)}
-              title={activeNav === "vehicles" ? "Edit vehicle details" : "Edit driver details"}
-            />
-          </div>
 
           </div>
           {/* end sticky */}
@@ -267,9 +275,9 @@ export default function CommercialAuto() {
           {/* Scrollable content area */}
           <div className="ca-scroll-area">
             {activeNav === "vehicles" ? (
-              activeView === "cards" ? <VehicleCards vehicles={filteredVehicles} /> : <VehicleGrid vehicles={filteredVehicles} />
+              activeView === "cards" ? <VehicleCards vehicles={filteredVehicles} onEdit={(v) => setEditingVehicle(v)} onDelete={(id) => { const v = vehicles.find(x => x.id === id); setDeleteConfirm({ type: 'vehicle', id, name: v?.yearMakeModel || '' }); }} /> : <VehicleGrid vehicles={filteredVehicles} />
             ) : (
-              activeView === "cards" ? <DriverCards drivers={filteredDrivers} /> : <DriverGrid drivers={filteredDrivers} />
+              activeView === "cards" ? <DriverCards drivers={filteredDrivers} onEdit={(d) => setEditingDriver(d)} onDelete={(id) => { const d = drivers.find(x => x.id === id); setDeleteConfirm({ type: 'driver', id, name: d?.fullName || '' }); }} /> : <DriverGrid drivers={filteredDrivers} />
             )}
           </div>
         </div>
@@ -303,17 +311,60 @@ export default function CommercialAuto() {
           onSave={(updated) => setDrivers(updated)}
         />
       )}
+      {editingVehicle && (
+        <SingleEditVehicleModal
+          vehicle={editingVehicle}
+          onClose={() => setEditingVehicle(null)}
+          onSave={(updated) => { setVehicles(prev => prev.map(v => v.id === updated.id ? updated : v)); setEditingVehicle(null); }}
+        />
+      )}
+      {editingDriver && (
+        <SingleEditDriverModal
+          driver={editingDriver}
+          onClose={() => setEditingDriver(null)}
+          onSave={(updated) => { setDrivers(prev => prev.map(d => d.id === updated.id ? updated : d)); setEditingDriver(null); }}
+        />
+      )}
+      {deleteConfirm && (
+        <div className="modal-overlay" onClick={() => setDeleteConfirm(null)}>
+          <div className="ca-delete-confirm" onClick={e => e.stopPropagation()}>
+            <h3 className="ca-delete-confirm-title">Delete {deleteConfirm.type === 'vehicle' ? 'Vehicle' : 'Driver'}</h3>
+            <p className="ca-delete-confirm-msg">Are you sure you want to delete <strong>{deleteConfirm.name}</strong>? This action cannot be undone.</p>
+            <div className="ca-delete-confirm-btns">
+              <button className="btn-cancel" onClick={() => setDeleteConfirm(null)}>CANCEL</button>
+              <button className="ca-delete-confirm-btn" onClick={() => {
+                if (deleteConfirm.type === 'vehicle') setVehicles(prev => prev.filter(x => x.id !== deleteConfirm.id));
+                else setDrivers(prev => prev.filter(x => x.id !== deleteConfirm.id));
+                setDeleteConfirm(null);
+              }}>DELETE</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function VehicleCards({ vehicles }) {
+function VehicleCards({ vehicles, onEdit, onDelete }) {
+  const [menuOpen, setMenuOpen] = React.useState(null);
+  const menuRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(null);
+    }
+    if (menuOpen !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [menuOpen]);
+
   const rows = [];
   for (let i = 0; i < vehicles.length; i += 3) {
     rows.push(vehicles.slice(i, i + 3));
   }
   return (
-    <div className="ca-cards-container">
+    <div className="ca-cards-container" ref={menuRef}>
       {rows.map((row, ri) => (
         <div className="ca-card-row" key={ri}>
           {row.map(v => (
@@ -321,6 +372,19 @@ function VehicleCards({ vehicles }) {
               <div className="ca-card-top-row">
                 <span className="ca-card-title">{v.yearMakeModel}</span>
                 <span className="ca-card-tag" style={{ background: (bodyTypeColors[v.bodyType] || "#636363") + '18', color: bodyTypeColors[v.bodyType] || "#636363" }}>{v.bodyType}</span>
+                <span className="ca-card-menu-wrap">
+                  <img src="/ra-menu-icon.svg" alt="Menu" className="ca-card-menu-icon" onClick={(e) => { e.stopPropagation(); setMenuOpen(menuOpen === v.id ? null : v.id); }} />
+                  {menuOpen === v.id && (
+                    <div className="ca-card-menu">
+                      <div className="ca-card-menu-item" onClick={() => { onEdit(v); setMenuOpen(null); }}>
+                        Edit Details
+                      </div>
+                      <div className="ca-card-menu-item ca-card-menu-item--danger" onClick={() => { onDelete(v.id); setMenuOpen(null); }}>
+                        Delete Vehicle
+                      </div>
+                    </div>
+                  )}
+                </span>
               </div>
               <div className="ca-card-info-row">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
@@ -388,13 +452,26 @@ function VehicleGrid({ vehicles }) {
   );
 }
 
-function DriverCards({ drivers }) {
+function DriverCards({ drivers, onEdit, onDelete }) {
+  const [menuOpen, setMenuOpen] = React.useState(null);
+  const menuRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(null);
+    }
+    if (menuOpen !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [menuOpen]);
+
   const rows = [];
   for (let i = 0; i < drivers.length; i += 3) {
     rows.push(drivers.slice(i, i + 3));
   }
   return (
-    <div className="ca-cards-container">
+    <div className="ca-cards-container" ref={menuRef}>
       {rows.map((row, ri) => (
         <div className="ca-card-row" key={ri}>
           {row.map(d => (
@@ -402,6 +479,19 @@ function DriverCards({ drivers }) {
               <div className="ca-card-top-row">
                 <span className="ca-card-title">{d.fullName}</span>
                 <span className="ca-card-tag ca-card-tag--neutral">{d.sex}</span>
+                <span className="ca-card-menu-wrap">
+                  <img src="/ra-menu-icon.svg" alt="Menu" className="ca-card-menu-icon" onClick={(e) => { e.stopPropagation(); setMenuOpen(menuOpen === d.id ? null : d.id); }} />
+                  {menuOpen === d.id && (
+                    <div className="ca-card-menu">
+                      <div className="ca-card-menu-item" onClick={() => { onEdit(d); setMenuOpen(null); }}>
+                        Edit Details
+                      </div>
+                      <div className="ca-card-menu-item ca-card-menu-item--danger" onClick={() => { onDelete(d.id); setMenuOpen(null); }}>
+                        Delete Driver
+                      </div>
+                    </div>
+                  )}
+                </span>
               </div>
               <div className="ca-card-info-row">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
@@ -424,7 +514,7 @@ function DriverCards({ drivers }) {
               </div>
               <div className="ca-card-bottom-row">
                 <span className="ca-card-secondary">Hired: {d.dateHired}</span>
-                <span className="ca-card-renewal-tag" style={{ color: d.renewalColor, background: d.renewalColor + '14' }}>{d.renewalText}</span>
+                {(() => { const r = calcRenewal(d.licYear); return <span className="ca-card-renewal-tag" style={{ color: r.renewalColor, background: r.renewalColor + '14' }}>LIC Renewal: {r.renewalText}</span>; })()}
               </div>
             </div>
           ))}
@@ -449,7 +539,7 @@ function DriverGrid({ drivers }) {
             <th>State</th>
             <th>Experience</th>
             <th>Date Hired</th>
-            <th>Renewal</th>
+            <th>License Renewal</th>
           </tr>
         </thead>
         <tbody>
@@ -461,11 +551,89 @@ function DriverGrid({ drivers }) {
               <td>{d.stateLic}</td>
               <td>{d.yrsExp} yrs</td>
               <td>{d.dateHired}</td>
-              <td style={{ color: d.renewalColor, fontWeight: 600 }}>{d.renewalText}</td>
+              <td style={{ color: calcRenewal(d.licYear).renewalColor, fontWeight: 600 }}>{calcRenewal(d.licYear).renewalText}</td>
             </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+const ALL_COVERAGES_LIST = [
+  "Liability-BI", "Liability-PD", "Collision", "Comprehensive",
+  "Cargo", "Uninsured", "Underinsured", "Medical Payments",
+  "Personal Injury", "Rental Reimbursement", "Towing", "Gap Coverage"
+];
+
+function SingleEditVehicleModal({ vehicle, onClose, onSave }) {
+  const [data, setData] = React.useState({ ...vehicle, coverages: vehicle.coverages || [] });
+  const update = (k, v) => setData(prev => ({ ...prev, [k]: v }));
+  const toggleCov = (cov) => setData(prev => ({ ...prev, coverages: prev.coverages.includes(cov) ? prev.coverages.filter(c => c !== cov) : [...prev.coverages, cov] }));
+  const removeCov = (cov) => setData(prev => ({ ...prev, coverages: prev.coverages.filter(c => c !== cov) }));
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="edit-modal" onClick={e => e.stopPropagation()}>
+        <div className="edit-modal-header"><h1 className="modal-main-heading">Edit Vehicle</h1></div>
+        <div className="edit-modal-body">
+          <div className="edit-modal-card">
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>Year, Make, Model</label><input type="text" value={data.yearMakeModel} onChange={e => update('yearMakeModel', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 150 }}><label>Body Type</label><select value={data.bodyType} onChange={e => update('bodyType', e.target.value)} className="modal-select"><option value="Van">Van</option><option value="Truck">Truck</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Semi">Semi</option><option value="Box Truck">Box Truck</option></select></div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>V.I.N</label><input type="text" value={data.vin} onChange={e => update('vin', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 150 }}><label>Cost New</label><input type="text" value={data.costNew} onChange={e => update('costNew', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 80 }}><label>State</label><input type="text" value={data.stateLic} onChange={e => update('stateLic', e.target.value)} /></div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>Address</label><input type="text" value={data.address} onChange={e => update('address', e.target.value)} /></div>
+            </div>
+          </div>
+          <div className="edit-modal-card" style={{ marginTop: 12 }}>
+            <label style={{ fontSize: 13, fontWeight: 600, marginBottom: 6, display: 'block' }}>Coverages</label>
+            <div className="cov-selected-box">
+              {data.coverages.length === 0 && <span className="cov-placeholder">No coverages</span>}
+              {data.coverages.map(c => <span className="cov-tag cov-tag--selected" key={c}>{c}<span className="cov-tag-remove" onClick={() => removeCov(c)}>✕</span></span>)}
+            </div>
+            <div className="cov-available">{ALL_COVERAGES_LIST.map(c => <span key={c} className={`cov-tag ${data.coverages.includes(c) ? 'cov-tag--active' : ''}`} onClick={() => toggleCov(c)}>{c}</span>)}</div>
+          </div>
+        </div>
+        <div className="edit-modal-footer"><button className="btn-cancel" onClick={onClose}>CANCEL</button><button className="btn-add-submit" onClick={() => onSave(data)}>SAVE</button></div>
+      </div>
+    </div>
+  );
+}
+
+function SingleEditDriverModal({ driver, onClose, onSave }) {
+  const [data, setData] = React.useState({ ...driver });
+  const update = (k, v) => setData(prev => ({ ...prev, [k]: v }));
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="edit-modal" onClick={e => e.stopPropagation()}>
+        <div className="edit-modal-header"><h1 className="modal-main-heading">Edit Driver</h1></div>
+        <div className="edit-modal-body">
+          <div className="edit-modal-card">
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>Full Name</label><input type="text" value={data.fullName} onChange={e => update('fullName', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 120 }}><label>Sex</label><select value={data.sex} onChange={e => update('sex', e.target.value)} className="modal-select"><option value="Male">Male</option><option value="Female">Female</option></select></div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>License #</label><input type="text" value={data.licNum} onChange={e => update('licNum', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 80 }}><label>State</label><input type="text" value={data.stateLic} onChange={e => update('stateLic', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 100 }}><label>Experience</label><input type="text" value={data.yrsExp} onChange={e => update('yrsExp', e.target.value)} /></div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ width: 140 }}><label>Date Hired</label><input type="text" value={data.dateHired} onChange={e => update('dateHired', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ flex: 1 }}><label>Address</label><input type="text" value={data.address} onChange={e => update('address', e.target.value)} /></div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ width: 140 }}><label>Yr LIC (expiry year)</label><input type="text" value={data.licYear || ''} onChange={e => update('licYear', e.target.value)} placeholder="e.g. 2028" /></div>
+            </div>
+          </div>
+        </div>
+        <div className="edit-modal-footer"><button className="btn-cancel" onClick={onClose}>CANCEL</button><button className="btn-add-submit" onClick={() => onSave(data)}>SAVE</button></div>
+      </div>
     </div>
   );
 }

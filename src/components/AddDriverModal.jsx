@@ -3,30 +3,23 @@ import React, { useState } from 'react';
 export default function AddDriverModal({ onClose, onAdd }) {
   const [fields, setFields] = useState({
     fullName: '', sex: '', licNum: '', stateLic: '',
-    yrsExp: '', dateHired: '', street: '', city: '', state: '', zip: '',
+    yrsExp: '', dateHired: '', licYear: '', street: '', city: '', state: '', zip: '',
   });
 
   const update = (k, v) => setFields(prev => ({ ...prev, [k]: v }));
 
   const canSave = fields.fullName && fields.licNum && fields.stateLic;
 
-  const getRenewal = () => {
-    // Default new driver to 4y left
-    return { renewalText: '4y 0m left', renewalColor: '#117C00' };
-  };
-
   const handleSubmit = () => {
     if (!canSave) return;
     const address = [fields.street, fields.city, fields.state, fields.zip].filter(Boolean).join(', ');
-    const renewal = getRenewal();
     onAdd({
       id: Date.now(),
       fullName: fields.fullName,
       sex: fields.sex || 'Male',
       licNum: fields.licNum,
       stateLic: fields.stateLic,
-      renewalText: renewal.renewalText,
-      renewalColor: renewal.renewalColor,
+      licYear: fields.licYear || '',
       yrsExp: fields.yrsExp || '0',
       dateHired: fields.dateHired || '-',
       address,
@@ -82,6 +75,10 @@ export default function AddDriverModal({ onClose, onAdd }) {
               <div className="edit-modal-field" style={{ width: 180 }}>
                 <label>Date Hired</label>
                 <input type="text" placeholder="e.g. Mar 2019" value={fields.dateHired} onChange={e => update('dateHired', e.target.value)} />
+              </div>
+              <div className="edit-modal-field" style={{ width: 140 }}>
+                <label>Yr LIC (expiry)</label>
+                <input type="text" placeholder="e.g. 2028" value={fields.licYear} onChange={e => update('licYear', e.target.value)} />
               </div>
             </div>
           </div>

@@ -1,38 +1,16 @@
 import React, { useState } from 'react';
 
-const ALL_COVERAGES = [
-  "Liability-BI", "Liability-PD", "Collision", "Comprehensive",
-  "Cargo", "Uninsured", "Underinsured", "Medical Payments",
-  "Personal Injury", "Rental Reimbursement", "Towing", "Gap Coverage"
-];
-
 export default function EditVehicleModal({ onClose, vehicles, onSave }) {
-  const [editData, setEditData] = useState(
-    vehicles.map(v => ({ ...v, coverages: v.coverages || [] }))
-  );
-  const [expandedId, setExpandedId] = useState(null);
+  const [editData, setEditData] = useState(vehicles.map(v => ({ ...v })));
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
-  const toggleExpand = (id) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
-  const updateVehicle = (id, field, value) => {
+  const updateField = (id, field, value) => {
     setEditData(prev => prev.map(v => v.id === id ? { ...v, [field]: value } : v));
   };
 
-  const toggleCoverage = (id, cov) => {
-    setEditData(prev => prev.map(v => {
-      if (v.id !== id) return v;
-      const covs = v.coverages || [];
-      return { ...v, coverages: covs.includes(cov) ? covs.filter(c => c !== cov) : [...covs, cov] };
-    }));
-  };
-
-  const removeCoverage = (id, cov) => {
-    setEditData(prev => prev.map(v => {
-      if (v.id !== id) return v;
-      return { ...v, coverages: (v.coverages || []).filter(c => c !== cov) };
-    }));
+  const deleteRow = (id) => {
+    setEditData(prev => prev.filter(v => v.id !== id));
+    setConfirmDelete(null);
   };
 
   const handleSave = () => {
@@ -47,91 +25,72 @@ export default function EditVehicleModal({ onClose, vehicles, onSave }) {
           <h1 className="modal-main-heading">Edit Vehicle Details</h1>
         </div>
         <div className="edit-modal-body">
-          <div className="ca-edit-list">
-            {editData.map((v) => (
-              <div className="ca-edit-item" key={v.id}>
-                <div className="ca-edit-item-header" onClick={() => toggleExpand(v.id)}>
-                  <span className="ca-edit-item-title">{v.yearMakeModel}</span>
-                  <span className="ca-edit-item-badge">{v.bodyType}</span>
-                  <span className="ca-edit-item-vin">VIN: {v.vin}</span>
-                  <span className={`ca-edit-chevron ${expandedId === v.id ? 'open' : ''}`}>▾</span>
-                </div>
-                {expandedId === v.id && (
-                  <div className="ca-edit-item-body">
-                    <div className="edit-modal-card">
-                      <div className="edit-modal-row">
-                        <div className="edit-modal-field" style={{ flex: 1 }}>
-                          <label>Year, Make, Model <span className="req">*</span></label>
-                          <input type="text" value={v.yearMakeModel} onChange={e => updateVehicle(v.id, 'yearMakeModel', e.target.value)} />
-                        </div>
-                        <div className="edit-modal-field" style={{ width: 160 }}>
-                          <label>Body Type <span className="req">*</span></label>
-                          <select value={v.bodyType} onChange={e => updateVehicle(v.id, 'bodyType', e.target.value)} className="modal-select">
-                            <option value="Van">Van</option>
-                            <option value="Truck">Truck</option>
-                            <option value="Sedan">Sedan</option>
-                            <option value="SUV">SUV</option>
-                            <option value="Semi">Semi</option>
-                            <option value="Box Truck">Box Truck</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div className="edit-modal-row">
-                        <div className="edit-modal-field" style={{ flex: 1 }}>
-                          <label>V.I.N <span className="req">*</span></label>
-                          <input type="text" value={v.vin} onChange={e => updateVehicle(v.id, 'vin', e.target.value)} />
-                        </div>
-                        <div className="edit-modal-field" style={{ width: 160 }}>
-                          <label>Cost New</label>
-                          <input type="text" value={v.costNew} onChange={e => updateVehicle(v.id, 'costNew', e.target.value)} />
-                        </div>
-                        <div className="edit-modal-field" style={{ width: 100 }}>
-                          <label>State LIC</label>
-                          <input type="text" value={v.stateLic} onChange={e => updateVehicle(v.id, 'stateLic', e.target.value)} />
-                        </div>
-                      </div>
-                      <div className="edit-modal-row">
-                        <div className="edit-modal-field" style={{ flex: 1 }}>
-                          <label>Garaging Address</label>
-                          <input type="text" value={v.address} onChange={e => updateVehicle(v.id, 'address', e.target.value)} />
-                        </div>
-                      </div>
-                    </div>
-                    {/* Coverages */}
-                    <div className="edit-modal-card" style={{ marginTop: 12 }}>
-                      <label style={{ fontSize: 13, fontWeight: 600, marginBottom: 6, display: 'block' }}>Coverages</label>
-                      <div className="cov-selected-box">
-                        {(!v.coverages || v.coverages.length === 0) && <span className="cov-placeholder">No coverages selected</span>}
-                        {(v.coverages || []).map(cov => (
-                          <span className="cov-tag cov-tag--selected" key={cov}>
-                            {cov}
-                            <span className="cov-tag-remove" onClick={() => removeCoverage(v.id, cov)}>✕</span>
-                          </span>
-                        ))}
-                      </div>
-                      <div className="cov-available">
-                        {ALL_COVERAGES.map(cov => (
-                          <span
-                            key={cov}
-                            className={`cov-tag ${(v.coverages || []).includes(cov) ? 'cov-tag--active' : ''}`}
-                            onClick={() => toggleCoverage(v.id, cov)}
-                          >
-                            {cov}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+          <div className="ca-edit-grid-wrapper">
+            <table className="ca-edit-grid">
+              <thead>
+                <tr>
+                  <th>Year, Make, Model</th>
+                  <th>Body Type</th>
+                  <th>V.I.N</th>
+                  <th>Address</th>
+                  <th>State</th>
+                  <th>Cost New</th>
+                  <th className="ca-edit-grid-actions-th"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {editData.map(v => (
+                  <tr key={v.id}>
+                    <td>
+                      <input type="text" className="ca-edit-grid-input" value={v.yearMakeModel} onChange={e => updateField(v.id, 'yearMakeModel', e.target.value)} />
+                    </td>
+                    <td>
+                      <select className="ca-edit-grid-select" value={v.bodyType} onChange={e => updateField(v.id, 'bodyType', e.target.value)}>
+                        <option value="Van">Van</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Semi">Semi</option>
+                        <option value="Box Truck">Box Truck</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="text" className="ca-edit-grid-input" value={v.vin} onChange={e => updateField(v.id, 'vin', e.target.value)} />
+                    </td>
+                    <td>
+                      <input type="text" className="ca-edit-grid-input" value={v.address} onChange={e => updateField(v.id, 'address', e.target.value)} />
+                    </td>
+                    <td>
+                      <input type="text" className="ca-edit-grid-input ca-edit-grid-input--sm" value={v.stateLic} onChange={e => updateField(v.id, 'stateLic', e.target.value)} />
+                    </td>
+                    <td>
+                      <input type="text" className="ca-edit-grid-input ca-edit-grid-input--sm" value={v.costNew} onChange={e => updateField(v.id, 'costNew', e.target.value)} />
+                    </td>
+                    <td className="ca-edit-grid-actions">
+                      <img src="/delete.svg" alt="Delete" className="ca-edit-grid-delete" onClick={() => setConfirmDelete({ id: v.id, name: v.yearMakeModel })} title="Remove" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-
         <div className="edit-modal-footer">
           <button className="btn-cancel" onClick={onClose}>CANCEL</button>
           <button className="btn-add-submit" onClick={handleSave}>SAVE</button>
         </div>
+        {confirmDelete && (
+          <div className="modal-overlay" style={{ position: 'absolute', inset: 0, borderRadius: 'inherit' }} onClick={() => setConfirmDelete(null)}>
+            <div className="ca-delete-confirm" onClick={e => e.stopPropagation()}>
+              <h3 className="ca-delete-confirm-title">Delete Vehicle</h3>
+              <p className="ca-delete-confirm-msg">Are you sure you want to delete <strong>{confirmDelete.name}</strong>? This action cannot be undone.</p>
+              <div className="ca-delete-confirm-btns">
+                <button className="btn-cancel" onClick={() => setConfirmDelete(null)}>CANCEL</button>
+                <button className="ca-delete-confirm-btn" onClick={() => deleteRow(confirmDelete.id)}>DELETE</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
