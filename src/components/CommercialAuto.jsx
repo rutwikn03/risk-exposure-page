@@ -12,7 +12,8 @@ function calcRenewal(licYear) {
   const issueYear = parseInt(licYear);
   const expiryYear = issueYear + 5;
   const yearsLeft = expiryYear - currentYear;
-  if (yearsLeft <= 0) return { renewalText: 'Expired', renewalColor: '#991B1B' };
+  if (yearsLeft < 0) return { renewalText: 'Expired', renewalColor: '#991B1B' };
+  if (yearsLeft === 0) return { renewalText: 'Expires this yr', renewalColor: '#991B1B' };
   if (yearsLeft === 1) return { renewalText: '1 yr left', renewalColor: '#92400E' };
   return { renewalText: `${yearsLeft} yrs left`, renewalColor: '#117C00' };
 }
