@@ -433,6 +433,7 @@ function VehicleGrid({ vehicles }) {
             <th>Address</th>
             <th>State</th>
             <th>Cost New</th>
+            <th>Coverages</th>
           </tr>
         </thead>
         <tbody>
@@ -444,6 +445,9 @@ function VehicleGrid({ vehicles }) {
               <td>{v.address}</td>
               <td>{v.stateLic}</td>
               <td>{v.costNew}</td>
+              <td className="ca-grid-coverages" title={(v.coverages || []).join(', ')}>
+                {(v.coverages || []).join(', ')}
+              </td>
             </tr>
           ))}
         </tbody>

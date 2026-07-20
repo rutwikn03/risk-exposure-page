@@ -834,3 +834,24 @@
 .ca-delete-confirm-btn:hover {
   background: #7f1d1d;
 }
+
+
+/* Grid coverages column - truncated, full on hover */
+.ca-grid-coverages {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+.ca-grid-coverages:hover {
+  white-space: normal;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin: -6px -10px;
+}
