@@ -639,16 +639,18 @@ function SingleEditDriverModal({ driver, onClose, onSave }) {
               <div className="edit-modal-field" style={{ width: 120 }}><label>Sex</label><select value={data.sex} onChange={e => update('sex', e.target.value)} className="modal-select"><option value="Male">Male</option><option value="Female">Female</option></select></div>
             </div>
             <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ width: 160 }}><label>Date of Birth</label><input type="date" value={data.dob || ''} onChange={e => update('dob', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 150 }}><label>Marital Status</label><select value={data.maritalStatus || ''} onChange={e => update('maritalStatus', e.target.value)} className="modal-select"><option value="">-</option><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option></select></div>
+            </div>
+            <div className="edit-modal-row">
               <div className="edit-modal-field" style={{ flex: 1 }}><label>License #</label><input type="text" value={data.licNum} onChange={e => update('licNum', e.target.value)} /></div>
               <div className="edit-modal-field" style={{ width: 80 }}><label>State</label><input type="text" value={data.stateLic} onChange={e => update('stateLic', e.target.value)} /></div>
               <div className="edit-modal-field" style={{ width: 100 }}><label>Experience</label><input type="text" value={data.yrsExp} onChange={e => update('yrsExp', e.target.value)} /></div>
             </div>
             <div className="edit-modal-row">
               <div className="edit-modal-field" style={{ width: 140 }}><label>Date Hired</label><input type="text" value={data.dateHired} onChange={e => update('dateHired', e.target.value)} /></div>
+              <div className="edit-modal-field" style={{ width: 140 }}><label>Yr LIC (expiry)</label><input type="text" value={data.licYear || ''} onChange={e => update('licYear', e.target.value)} placeholder="e.g. 2028" /></div>
               <div className="edit-modal-field" style={{ flex: 1 }}><label>Address</label><input type="text" value={data.address} onChange={e => update('address', e.target.value)} /></div>
-            </div>
-            <div className="edit-modal-row">
-              <div className="edit-modal-field" style={{ width: 140 }}><label>Yr LIC (expiry year)</label><input type="text" value={data.licYear || ''} onChange={e => update('licYear', e.target.value)} placeholder="e.g. 2028" /></div>
             </div>
           </div>
         </div>

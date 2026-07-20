@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 export default function AddDriverModal({ onClose, onAdd }) {
   const [fields, setFields] = useState({
     fullName: '', sex: '', licNum: '', stateLic: '',
-    yrsExp: '', dateHired: '', licYear: '', street: '', city: '', state: '', zip: '',
+    yrsExp: '', dateHired: '', licYear: '', dob: '', maritalStatus: '',
+    street: '', city: '', state: '', zip: '',
   });
 
   const update = (k, v) => setFields(prev => ({ ...prev, [k]: v }));
@@ -20,6 +21,8 @@ export default function AddDriverModal({ onClose, onAdd }) {
       licNum: fields.licNum,
       stateLic: fields.stateLic,
       licYear: fields.licYear || '',
+      dob: fields.dob || '',
+      maritalStatus: fields.maritalStatus || '',
       yrsExp: fields.yrsExp || '0',
       dateHired: fields.dateHired || '-',
       address,
@@ -64,6 +67,21 @@ export default function AddDriverModal({ onClose, onAdd }) {
                   <option value="NY">NY</option><option value="GA">GA</option>
                   <option value="CO">CO</option><option value="TN">TN</option>
                   <option value="PA">PA</option><option value="AZ">AZ</option>
+                </select>
+              </div>
+            </div>
+            <div className="edit-modal-row">
+              <div className="edit-modal-field" style={{ width: 160 }}>
+                <label>Date of Birth</label>
+                <input type="date" value={fields.dob} onChange={e => update('dob', e.target.value)} />
+              </div>
+              <div className="edit-modal-field" style={{ width: 160 }}>
+                <label>Marital Status</label>
+                <select value={fields.maritalStatus} onChange={e => update('maritalStatus', e.target.value)} className="modal-select">
+                  <option value="">Select...</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
                 </select>
               </div>
             </div>

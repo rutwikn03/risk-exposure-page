@@ -31,6 +31,8 @@ export default function EditDriverModal({ onClose, drivers, onSave }) {
                 <tr>
                   <th>Full Name</th>
                   <th>Sex</th>
+                  <th>DOB</th>
+                  <th>Marital</th>
                   <th>License #</th>
                   <th>State</th>
                   <th>Exp (yrs)</th>
@@ -50,6 +52,17 @@ export default function EditDriverModal({ onClose, drivers, onSave }) {
                       <select className="ca-edit-grid-select" value={d.sex} onChange={e => updateField(d.id, 'sex', e.target.value)}>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="date" className="ca-edit-grid-input" value={d.dob || ''} onChange={e => updateField(d.id, 'dob', e.target.value)} />
+                    </td>
+                    <td>
+                      <select className="ca-edit-grid-select" value={d.maritalStatus || ''} onChange={e => updateField(d.id, 'maritalStatus', e.target.value)}>
+                        <option value="">-</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
                       </select>
                     </td>
                     <td>
