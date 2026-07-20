@@ -445,8 +445,8 @@ function VehicleGrid({ vehicles }) {
               <td>{v.address}</td>
               <td>{v.stateLic}</td>
               <td>{v.costNew}</td>
-              <td className="ca-grid-coverages" title={(v.coverages || []).join(', ')}>
-                {(v.coverages || []).join(', ')}
+              <td className="ca-grid-coverages">
+                <CoverageCell coverages={v.coverages || []} />
               </td>
             </tr>
           ))}
@@ -655,6 +655,27 @@ function SingleEditDriverModal({ driver, onClose, onSave }) {
         <div className="edit-modal-footer"><button className="btn-cancel" onClick={onClose}>CANCEL</button><button className="btn-add-submit" onClick={() => onSave(data)}>SAVE</button></div>
       </div>
     </div>
+  );
+}
+
+function CoverageCell({ coverages }) {
+  const [expanded, setExpanded] = React.useState(false);
+  if (!coverages.length) return <span>-</span>;
+  const preview = coverages.slice(0, 2).join(', ');
+  const hasMore = coverages.length > 2;
+  if (expanded) {
+    return (
+      <span>
+        {coverages.join(', ')}
+        <span className="ca-grid-see-more" onClick={() => setExpanded(false)}> Show less</span>
+      </span>
+    );
+  }
+  return (
+    <span>
+      {preview}
+      {hasMore && <span className="ca-grid-see-more" onClick={() => setExpanded(true)}> ...See more</span>}
+    </span>
   );
 }
 
