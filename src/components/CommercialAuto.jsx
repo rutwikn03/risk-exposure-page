@@ -1,0 +1,508 @@
+import React, { useState, useMemo } from 'react';
+import AddVehicleModal from './AddVehicleModal';
+import EditVehicleModal from './EditVehicleModal';
+import AddDriverModal from './AddDriverModal';
+import EditDriverModal from './EditDriverModal';
+
+const baseVehicles = [
+  { id: 1, yearMakeModel: "2024 Ford Transit 250", bodyType: "Van", vin: "1FTBW2CM5RKA48291", address: "4521 Industrial Blvd, Dallas, TX 75207", stateLic: "TX", costNew: "$52,840", coverages: ["Liability-BI", "Liability-PD", "Collision", "Comprehensive"] },
+  { id: 2, yearMakeModel: "2023 Chevy Silverado 2500HD", bodyType: "Truck", vin: "3GCPYFED2NG534812", address: "4521 Industrial Blvd, Dallas, TX 75207", stateLic: "TX", costNew: "$67,295", coverages: ["Liability-BI", "Collision", "Comprehensive", "Cargo"] },
+  { id: 3, yearMakeModel: "2024 Toyota Camry LE", bodyType: "Sedan", vin: "4T1G11AK8RU092456", address: "890 Commerce Way, Los Angeles, CA 90015", stateLic: "CA", costNew: "$28,855", coverages: ["Liability-BI", "Liability-PD", "Collision"] },
+  { id: 4, yearMakeModel: "2022 Freightliner Cascadia 126", bodyType: "Semi", vin: "3AKJHHDR4NSLA7834", address: "1200 Logistics Pkwy, Chicago, IL 60607", stateLic: "IL", costNew: "$178,500", coverages: ["Liability-BI", "Liability-PD", "Collision", "Cargo"] },
+  { id: 5, yearMakeModel: "2024 Ram ProMaster 3500", bodyType: "Van", vin: "3C6MRVJG8RE182745", address: "3300 NW 72nd Ave, Miami, FL 33122", stateLic: "FL", costNew: "$48,120", coverages: ["Liability-BI", "Collision", "Uninsured"] },
+  { id: 6, yearMakeModel: "2023 Ford F-150 Lightning", bodyType: "Truck", vin: "1FTVW1EL5NWD43678", address: "890 Commerce Way, Los Angeles, CA 90015", stateLic: "CA", costNew: "$73,490", coverages: ["Liability-BI", "Liability-PD", "Collision", "Comprehensive"] },
+  { id: 7, yearMakeModel: "2024 Mercedes Sprinter 2500", bodyType: "Van", vin: "W1Y4KBHY3RT012345", address: "7820 Peachtree Rd, Atlanta, GA 30309", stateLic: "GA", costNew: "$58,900", coverages: ["Liability-BI", "Comprehensive", "Cargo"] },
+  { id: 8, yearMakeModel: "2023 Peterbilt 579", bodyType: "Semi", vin: "1XPBD49X3ND567890", address: "1200 Logistics Pkwy, Chicago, IL 60607", stateLic: "IL", costNew: "$195,000", coverages: ["Liability-BI", "Liability-PD", "Cargo", "Collision"] },
+  { id: 9, yearMakeModel: "2024 Honda CR-V EX", bodyType: "SUV", vin: "7FARW2H5XRE123456", address: "2100 Main St, Houston, TX 77002", stateLic: "TX", costNew: "$34,750", coverages: ["Liability-BI", "Collision", "Comprehensive"] },
+  { id: 10, yearMakeModel: "2023 Isuzu NPR HD", bodyType: "Box Truck", vin: "JALB4W163R7890123", address: "500 Distribution Dr, Phoenix, AZ 85034", stateLic: "AZ", costNew: "$62,400", coverages: ["Liability-BI", "Liability-PD", "Cargo"] },
+  { id: 11, yearMakeModel: "2024 Chevy Express 3500", bodyType: "Van", vin: "1GCWGBFG5R1234567", address: "9100 SW 40th St, Miami, FL 33165", stateLic: "FL", costNew: "$44,200", coverages: ["Liability-BI", "Collision", "Uninsured"] },
+  { id: 12, yearMakeModel: "2022 Kenworth T680", bodyType: "Semi", vin: "1XKYD49X7NJ098765", address: "3400 Trucking Ln, Memphis, TN 38118", stateLic: "TN", costNew: "$185,600", coverages: ["Liability-BI", "Liability-PD", "Collision", "Cargo", "Comprehensive"] },
+  { id: 13, yearMakeModel: "2024 Ford Explorer ST", bodyType: "SUV", vin: "1FM5K8GC5RGA54321", address: "750 Corporate Dr, Denver, CO 80202", stateLic: "CO", costNew: "$56,700", coverages: ["Liability-BI", "Collision", "Comprehensive", "Uninsured"] },
+  { id: 14, yearMakeModel: "2023 Toyota Tacoma TRD", bodyType: "Truck", vin: "3TMCZ5AN4NM876543", address: "2100 Main St, Houston, TX 77002", stateLic: "TX", costNew: "$42,350", coverages: ["Liability-BI", "Liability-PD", "Collision"] },
+  { id: 15, yearMakeModel: "2024 Nissan NV200", bodyType: "Van", vin: "3N6CM0KN8RK111222", address: "1500 Market St, Philadelphia, PA 19102", stateLic: "PA", costNew: "$31,500", coverages: ["Liability-BI", "Collision"] },
+  { id: 16, yearMakeModel: "2023 GMC Sierra 3500HD", bodyType: "Truck", vin: "1GT49VEY5NF333444", address: "4521 Industrial Blvd, Dallas, TX 75207", stateLic: "TX", costNew: "$78,900", coverages: ["Liability-BI", "Liability-PD", "Collision", "Comprehensive", "Cargo"] },
+  { id: 17, yearMakeModel: "2024 Volvo VNL 860", bodyType: "Semi", vin: "4V4NC9EH7RN555666", address: "8900 I-40 West, Amarillo, TX 79106", stateLic: "TX", costNew: "$210,000", coverages: ["Liability-BI", "Liability-PD", "Cargo", "Collision", "Medical Payments"] },
+  { id: 18, yearMakeModel: "2023 Hino L6", bodyType: "Box Truck", vin: "5PVN34BV2N4777888", address: "600 Harbor Blvd, Long Beach, CA 90802", stateLic: "CA", costNew: "$72,300", coverages: ["Liability-BI", "Collision", "Cargo"] },
+  { id: 19, yearMakeModel: "2024 Jeep Grand Cherokee L", bodyType: "SUV", vin: "1C4RJKBG5R8999000", address: "312 E 84th St, New York, NY 10028", stateLic: "NY", costNew: "$52,100", coverages: ["Liability-BI", "Comprehensive", "Collision", "Uninsured"] },
+  { id: 20, yearMakeModel: "2023 Ford E-Transit", bodyType: "Van", vin: "1FTBW9CK5NKA11223", address: "890 Commerce Way, Los Angeles, CA 90015", stateLic: "CA", costNew: "$55,600", coverages: ["Liability-BI", "Liability-PD", "Collision"] },
+  { id: 21, yearMakeModel: "2024 Mack Anthem", bodyType: "Semi", vin: "1M1AN07Y7RM334455", address: "1200 Logistics Pkwy, Chicago, IL 60607", stateLic: "IL", costNew: "$192,800", coverages: ["Liability-BI", "Liability-PD", "Cargo", "Collision", "Comprehensive"] },
+  { id: 22, yearMakeModel: "2023 Chevy Colorado ZR2", bodyType: "Truck", vin: "1GCPTEE12P1566677", address: "3300 NW 72nd Ave, Miami, FL 33122", stateLic: "FL", costNew: "$46,800", coverages: ["Liability-BI", "Collision", "Comprehensive"] },
+  { id: 23, yearMakeModel: "2024 Dodge Durango SRT", bodyType: "SUV", vin: "1C4SDJGJ5RC788899", address: "750 Corporate Dr, Denver, CO 80202", stateLic: "CO", costNew: "$68,500", coverages: ["Liability-BI", "Liability-PD", "Collision", "Comprehensive", "Towing"] },
+  { id: 24, yearMakeModel: "2022 International LT625", bodyType: "Semi", vin: "3HSDJAPR4NN900011", address: "8900 I-40 West, Amarillo, TX 79106", stateLic: "TX", costNew: "$175,400", coverages: ["Liability-BI", "Liability-PD", "Cargo", "Collision"] },
+];
+
+const baseDrivers = [
+  { id: 1, fullName: "Marcus D. Johnson", sex: "Male", licNum: "3849 2918 8291", stateLic: "TX", renewalText: "2y 4m left", renewalColor: "#117C00", yrsExp: "12", dateHired: "Mar 2019", address: "1847 Elm Creek Dr, Arlington, TX" },
+  { id: 2, fullName: "Sarah K. Okonkwo", sex: "Female", licNum: "D723 4567", stateLic: "CA", renewalText: "5m left", renewalColor: "#92400E", yrsExp: "8", dateHired: "Jun 2021", address: "2290 Sunset Blvd, LA, CA" },
+  { id: 3, fullName: "Robert A. Chen", sex: "Male", licNum: "C432 1010 98", stateLic: "IL", renewalText: "1y 9m left", renewalColor: "#117C00", yrsExp: "22", dateHired: "Jan 2017", address: "4410 N Ashland Ave, Chicago, IL" },
+  { id: 4, fullName: "Diana L. Morales", sex: "Female", licNum: "M893 4782 3", stateLic: "FL", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "5", dateHired: "Nov 2022", address: "780 Brickell Ave, Miami, FL" },
+  { id: 5, fullName: "James T. Whitfield", sex: "Male", licNum: "W293 8554 0", stateLic: "NY", renewalText: "3y 1m left", renewalColor: "#117C00", yrsExp: "15", dateHired: "Apr 2018", address: "312 E 84th St, New York, NY" },
+  { id: 6, fullName: "Priya R. Nair", sex: "Female", licNum: "N567 8210 9", stateLic: "TX", renewalText: "8m left", renewalColor: "#92400E", yrsExp: "3", dateHired: "Sep 2023", address: "6701 Forest Ln, Dallas, TX" },
+  { id: 7, fullName: "Anthony B. Rivera", sex: "Male", licNum: "R234 5678 1", stateLic: "GA", renewalText: "1y 2m left", renewalColor: "#117C00", yrsExp: "9", dateHired: "Feb 2020", address: "3420 Peachtree Rd NE, Atlanta, GA" },
+  { id: 8, fullName: "Michelle K. Thompson", sex: "Female", licNum: "T891 2345 6", stateLic: "TX", renewalText: "2y 11m left", renewalColor: "#117C00", yrsExp: "18", dateHired: "Aug 2016", address: "5500 Preston Rd, Dallas, TX" },
+  { id: 9, fullName: "David W. Park", sex: "Male", licNum: "P456 7890 2", stateLic: "CA", renewalText: "3m left", renewalColor: "#92400E", yrsExp: "6", dateHired: "Jan 2022", address: "1800 Ocean Ave, Santa Monica, CA" },
+  { id: 10, fullName: "Lisa M. O'Brien", sex: "Female", licNum: "O123 4567 8", stateLic: "IL", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "2", dateHired: "Mar 2024", address: "2200 W Division St, Chicago, IL" },
+  { id: 11, fullName: "Carlos E. Gutierrez", sex: "Male", licNum: "G678 9012 3", stateLic: "FL", renewalText: "4y 0m left", renewalColor: "#117C00", yrsExp: "25", dateHired: "Jun 2014", address: "900 Biscayne Blvd, Miami, FL" },
+  { id: 12, fullName: "Jennifer A. Walsh", sex: "Female", licNum: "W345 6789 0", stateLic: "NY", renewalText: "1y 5m left", renewalColor: "#117C00", yrsExp: "11", dateHired: "Oct 2019", address: "450 W 33rd St, New York, NY" },
+  { id: 13, fullName: "Kevin R. Patel", sex: "Male", licNum: "P789 0123 4", stateLic: "TX", renewalText: "7m left", renewalColor: "#92400E", yrsExp: "4", dateHired: "May 2023", address: "2100 Main St, Houston, TX" },
+  { id: 14, fullName: "Amanda J. Foster", sex: "Female", licNum: "F012 3456 7", stateLic: "CO", renewalText: "2y 8m left", renewalColor: "#117C00", yrsExp: "14", dateHired: "Sep 2018", address: "750 Corporate Dr, Denver, CO" },
+  { id: 15, fullName: "William H. Nakamura", sex: "Male", licNum: "N890 1234 5", stateLic: "CA", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "7", dateHired: "Dec 2020", address: "600 Harbor Blvd, Long Beach, CA" },
+  { id: 16, fullName: "Stephanie L. Adams", sex: "Female", licNum: "A567 8901 2", stateLic: "TN", renewalText: "3y 6m left", renewalColor: "#117C00", yrsExp: "20", dateHired: "Mar 2015", address: "3400 Trucking Ln, Memphis, TN" },
+  { id: 17, fullName: "Brian P. Kowalski", sex: "Male", licNum: "K234 5678 9", stateLic: "PA", renewalText: "11m left", renewalColor: "#92400E", yrsExp: "10", dateHired: "Jul 2020", address: "1500 Market St, Philadelphia, PA" },
+  { id: 18, fullName: "Rachel N. Singh", sex: "Female", licNum: "S901 2345 6", stateLic: "TX", renewalText: "2y 1m left", renewalColor: "#117C00", yrsExp: "16", dateHired: "Apr 2017", address: "8900 I-40 West, Amarillo, TX" },
+  { id: 19, fullName: "Thomas G. Fitzgerald", sex: "Male", licNum: "F678 9012 3", stateLic: "IL", renewalText: "6m left", renewalColor: "#92400E", yrsExp: "1", dateHired: "Jan 2025", address: "1200 Logistics Pkwy, Chicago, IL" },
+  { id: 20, fullName: "Olivia C. Yamamoto", sex: "Female", licNum: "Y345 6789 0", stateLic: "FL", renewalText: "4y 2m left", renewalColor: "#117C00", yrsExp: "19", dateHired: "Nov 2015", address: "9100 SW 40th St, Miami, FL" },
+  { id: 21, fullName: "Derek M. Sullivan", sex: "Male", licNum: "S012 3456 7", stateLic: "NY", renewalText: "1y 0m left", renewalColor: "#117C00", yrsExp: "13", dateHired: "Aug 2019", address: "789 Broadway, New York, NY" },
+  { id: 22, fullName: "Maria T. Vasquez", sex: "Female", licNum: "V789 0123 4", stateLic: "CA", renewalText: "Expired", renewalColor: "#991B1B", yrsExp: "8", dateHired: "Feb 2021", address: "890 Commerce Way, Los Angeles, CA" },
+  { id: 23, fullName: "Patrick J. Murphy", sex: "Male", licNum: "M456 7890 1", stateLic: "GA", renewalText: "2y 6m left", renewalColor: "#117C00", yrsExp: "17", dateHired: "Jun 2016", address: "7820 Peachtree Rd, Atlanta, GA" },
+  { id: 24, fullName: "Nicole R. Kim", sex: "Female", licNum: "K123 4567 8", stateLic: "TX", renewalText: "9m left", renewalColor: "#92400E", yrsExp: "6", dateHired: "Apr 2022", address: "4521 Industrial Blvd, Dallas, TX" },
+];
+
+const bodyTypeColors = { Van: "#2322F0", Truck: "#117C00", Sedan: "#636363", Semi: "#92400E", SUV: "#555", "Box Truck": "#333" };
+
+export default function CommercialAuto() {
+  const [vehicles, setVehicles] = useState(baseVehicles);
+  const [drivers, setDrivers] = useState(baseDrivers);
+  const [activeNav, setActiveNav] = useState("vehicles");
+  const [activeView, setActiveView] = useState("cards");
+  const [activeSubTab, setActiveSubTab] = useState("risk");
+  const [vehicleSearch, setVehicleSearch] = useState("");
+  const [driverSearch, setDriverSearch] = useState("");
+  const [filterBodyType, setFilterBodyType] = useState("");
+  const [filterVState, setFilterVState] = useState("");
+  const [filterCountry, setFilterCountry] = useState("");
+  const [filterDState, setFilterDState] = useState("");
+  const [filterExp, setFilterExp] = useState("");
+  const [showAddVehicle, setShowAddVehicle] = useState(false);
+  const [showEditVehicle, setShowEditVehicle] = useState(false);
+  const [showAddDriver, setShowAddDriver] = useState(false);
+  const [showEditDriver, setShowEditDriver] = useState(false);
+
+  const filteredVehicles = useMemo(() => {
+    let result = vehicles;
+    if (vehicleSearch) {
+      const s = vehicleSearch.toLowerCase();
+      result = result.filter(v =>
+        v.yearMakeModel.toLowerCase().includes(s) ||
+        v.vin.toLowerCase().includes(s) ||
+        v.address.toLowerCase().includes(s)
+      );
+    }
+    if (filterBodyType) result = result.filter(v => v.bodyType === filterBodyType);
+    if (filterVState) result = result.filter(v => v.stateLic === filterVState);
+    return result;
+  }, [vehicles, vehicleSearch, filterBodyType, filterVState]);
+
+  const filteredDrivers = useMemo(() => {
+    let result = drivers;
+    if (driverSearch) {
+      const s = driverSearch.toLowerCase();
+      result = result.filter(d =>
+        d.fullName.toLowerCase().includes(s) ||
+        d.licNum.toLowerCase().includes(s) ||
+        d.address.toLowerCase().includes(s)
+      );
+    }
+    if (filterDState) result = result.filter(d => d.stateLic === filterDState);
+    if (filterExp) {
+      result = result.filter(d => {
+        const exp = parseInt(d.yrsExp);
+        if (filterExp === "20+") return exp >= 20;
+        const [min, max] = filterExp.split("-").map(Number);
+        return exp >= min && exp <= max;
+      });
+    }
+    return result;
+  }, [drivers, driverSearch, filterDState, filterExp]);
+
+  return (
+    <div className="ca-page">
+      {/* Sub-tabs: same style as property page */}
+      <div className="sub-tabs">
+        <a
+          className={`sub-tab${activeSubTab === 'loss' ? ' active' : ''}`}
+          href="#"
+          onClick={(e) => { e.preventDefault(); setActiveSubTab('loss'); }}
+        >
+          Loss History
+        </a>
+        <a
+          className={`sub-tab${activeSubTab === 'risk' ? ' active' : ''}`}
+          href="#"
+          onClick={(e) => { e.preventDefault(); setActiveSubTab('risk'); }}
+        >
+          Risk Exposure
+        </a>
+      </div>
+
+      {activeSubTab === 'loss' ? (
+        <div className="under-progress">
+          <div className="under-progress-content">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="30" stroke="#2322f0" strokeWidth="3" fill="none" strokeDasharray="8 4" />
+              <path d="M24 32h16M32 24v16" stroke="#2322f0" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+            <h3>Under Progress</h3>
+            <p>Loss History module is currently being developed.</p>
+          </div>
+        </div>
+      ) : (
+      <div className="ca-main">
+        {/* Left Nav - text only with left blue bar for active */}
+        <div className="ca-left-nav">
+          <div
+            className={`ca-nav-link ${activeNav === "vehicles" ? "ca-nav-link--active" : ""}`}
+            onClick={() => setActiveNav("vehicles")}
+          >
+            Vehicle Information
+          </div>
+          <div
+            className={`ca-nav-link ${activeNav === "drivers" ? "ca-nav-link--active" : ""}`}
+            onClick={() => setActiveNav("drivers")}
+          >
+            Driver Information
+          </div>
+        </div>
+
+        <div className="ca-pane-divider" />
+
+        {/* Right Content */}
+        <div className="ca-right-content">
+          {/* Sticky header area */}
+          <div className="ca-right-sticky">
+            {/* Header row */}
+            <div className="ca-content-header">
+              <h2 className="ca-content-title">
+                {activeNav === "vehicles" ? "Vehicle Information" : "Driver Information"}
+              </h2>
+              <div className="ca-view-toggle">
+                <button
+                  className={`ca-toggle-btn ${activeView === "cards" ? "ca-toggle-btn--active" : ""}`}
+                  onClick={() => setActiveView("cards")}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                    <rect x="1" y="1" width="6" height="6" rx="1" />
+                    <rect x="9" y="1" width="6" height="6" rx="1" />
+                    <rect x="1" y="9" width="6" height="6" rx="1" />
+                    <rect x="9" y="9" width="6" height="6" rx="1" />
+                  </svg>
+                  Cards
+                </button>
+                <button
+                  className={`ca-toggle-btn ${activeView === "grid" ? "ca-toggle-btn--active" : ""}`}
+                  onClick={() => setActiveView("grid")}
+                >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                    <rect x="1" y="2" width="14" height="2" rx="0.5" />
+                    <rect x="1" y="7" width="14" height="2" rx="0.5" />
+                    <rect x="1" y="12" width="14" height="2" rx="0.5" />
+                  </svg>
+                  Grid
+                </button>
+              </div>
+            </div>
+
+          {/* Search + Filters - same style as property page */}
+          {activeNav === "vehicles" ? (
+            <div className="ca-filter-bar">
+              <div className="search-row">
+                <div className="search-box">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <circle cx="5" cy="5" r="4" stroke="#767676" strokeWidth="1.2" />
+                    <line x1="8" y1="8" x2="11" y2="11" stroke="#767676" strokeWidth="1.2" />
+                  </svg>
+                  <input type="text" placeholder="Search vehicles..." value={vehicleSearch} onChange={e => setVehicleSearch(e.target.value)} />
+                  {vehicleSearch && <span style={{ cursor: 'pointer', color: '#999', fontSize: 14 }} onClick={() => setVehicleSearch('')}>✕</span>}
+                </div>
+                <img src="/search.svg" alt="Search" className="search-btn-img" />
+              </div>
+              <div className="sidebar-filters-row">
+                <FilterDropdown label="BODY TYPE" value={filterBodyType} options={["Van","Truck","Sedan","SUV","Semi","Box Truck"]} onChange={setFilterBodyType} />
+                <FilterDropdown label="STATE LIC" value={filterVState} options={["TX","CA","IL","FL","NY","GA","CO","TN","PA","AZ"]} onChange={setFilterVState} />
+                <FilterDropdown label="COUNTRY" value={filterCountry} options={["USA","Canada","Mexico"]} onChange={setFilterCountry} />
+              </div>
+            </div>
+          ) : (
+            <div className="ca-filter-bar">
+              <div className="search-row">
+                <div className="search-box">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <circle cx="5" cy="5" r="4" stroke="#767676" strokeWidth="1.2" />
+                    <line x1="8" y1="8" x2="11" y2="11" stroke="#767676" strokeWidth="1.2" />
+                  </svg>
+                  <input type="text" placeholder="Search drivers..." value={driverSearch} onChange={e => setDriverSearch(e.target.value)} />
+                  {driverSearch && <span style={{ cursor: 'pointer', color: '#999', fontSize: 14 }} onClick={() => setDriverSearch('')}>✕</span>}
+                </div>
+                <img src="/search.svg" alt="Search" className="search-btn-img" />
+              </div>
+              <div className="sidebar-filters-row">
+                <FilterDropdown label="STATE LIC" value={filterDState} options={["TX","CA","IL","FL","NY","GA","CO","TN","PA","AZ"]} onChange={setFilterDState} />
+                <FilterDropdown label="EXPERIENCE" value={filterExp} options={["0-5","6-10","11-15","16-20","20+"]} labels={["0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"]} onChange={setFilterExp} />
+              </div>
+            </div>
+          )}
+
+          {/* Action buttons - Add left (image btn), Edit far right (image btn) */}
+          <div className="ca-actions">
+            <img
+              src={activeNav === "vehicles" ? "/add vehicle.svg" : "/add driver.svg"}
+              alt={activeNav === "vehicles" ? "Add Vehicle" : "Add Driver"}
+              className="add-premise-btn-img"
+              onClick={() => activeNav === "vehicles" ? setShowAddVehicle(true) : setShowAddDriver(true)}
+              title={activeNav === "vehicles" ? "Add a new vehicle" : "Add a new driver"}
+            />
+            <div className="ca-actions-spacer" />
+            <img
+              src="/edit button.svg"
+              alt={activeNav === "vehicles" ? "Edit Vehicle Details" : "Edit Driver Details"}
+              className="header-action-img"
+              onClick={() => activeNav === "vehicles" ? setShowEditVehicle(true) : setShowEditDriver(true)}
+              title={activeNav === "vehicles" ? "Edit vehicle details" : "Edit driver details"}
+            />
+          </div>
+
+          </div>
+          {/* end sticky */}
+
+          {/* Scrollable content area */}
+          <div className="ca-scroll-area">
+            {activeNav === "vehicles" ? (
+              activeView === "cards" ? <VehicleCards vehicles={filteredVehicles} /> : <VehicleGrid vehicles={filteredVehicles} />
+            ) : (
+              activeView === "cards" ? <DriverCards drivers={filteredDrivers} /> : <DriverGrid drivers={filteredDrivers} />
+            )}
+          </div>
+        </div>
+      </div>
+      )}
+
+      {/* Modals */}
+      {showAddVehicle && (
+        <AddVehicleModal
+          onClose={() => setShowAddVehicle(false)}
+          onAdd={(newVehicle) => { setVehicles(prev => [...prev, newVehicle]); setShowAddVehicle(false); }}
+        />
+      )}
+      {showEditVehicle && (
+        <EditVehicleModal
+          onClose={() => setShowEditVehicle(false)}
+          vehicles={vehicles}
+          onSave={(updated) => setVehicles(updated)}
+        />
+      )}
+      {showAddDriver && (
+        <AddDriverModal
+          onClose={() => setShowAddDriver(false)}
+          onAdd={(newDriver) => { setDrivers(prev => [...prev, newDriver]); setShowAddDriver(false); }}
+        />
+      )}
+      {showEditDriver && (
+        <EditDriverModal
+          onClose={() => setShowEditDriver(false)}
+          drivers={drivers}
+          onSave={(updated) => setDrivers(updated)}
+        />
+      )}
+    </div>
+  );
+}
+
+function VehicleCards({ vehicles }) {
+  const rows = [];
+  for (let i = 0; i < vehicles.length; i += 3) {
+    rows.push(vehicles.slice(i, i + 3));
+  }
+  return (
+    <div className="ca-cards-container">
+      {rows.map((row, ri) => (
+        <div className="ca-card-row" key={ri}>
+          {row.map(v => (
+            <div className="ca-card" key={v.id}>
+              <div className="ca-card-top-row">
+                <span className="ca-card-title">{v.yearMakeModel}</span>
+                <span className="ca-card-tag" style={{ background: (bodyTypeColors[v.bodyType] || "#636363") + '18', color: bodyTypeColors[v.bodyType] || "#636363" }}>{v.bodyType}</span>
+              </div>
+              <div className="ca-card-info-row">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                <span className="ca-card-secondary">{v.address}</span>
+              </div>
+              <div className="ca-card-divider" />
+              <div className="ca-card-meta">
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">VIN</span>
+                  <span className="ca-card-meta-value">{v.vin}</span>
+                </div>
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">State</span>
+                  <span className="ca-card-meta-value">{v.stateLic}</span>
+                </div>
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">Cost New</span>
+                  <span className="ca-card-meta-value">{v.costNew}</span>
+                </div>
+              </div>
+              {v.coverages && v.coverages.length > 0 && (
+                <div className="ca-card-coverages">
+                  {v.coverages.map(c => <span className="ca-card-cov-tag" key={c}>{c}</span>)}
+                </div>
+              )}
+            </div>
+          ))}
+          {row.length < 3 && Array.from({ length: 3 - row.length }).map((_, i) => (
+            <div className="ca-card ca-card--empty" key={`empty-${i}`} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function VehicleGrid({ vehicles }) {
+  return (
+    <div className="ca-grid-wrapper">
+      <table className="ca-grid">
+        <thead>
+          <tr>
+            <th>Year, Make, Model</th>
+            <th>Body Type</th>
+            <th>V.I.N</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>Cost New</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vehicles.map(v => (
+            <tr key={v.id}>
+              <td>{v.yearMakeModel}</td>
+              <td>{v.bodyType}</td>
+              <td>{v.vin}</td>
+              <td>{v.address}</td>
+              <td>{v.stateLic}</td>
+              <td>{v.costNew}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function DriverCards({ drivers }) {
+  const rows = [];
+  for (let i = 0; i < drivers.length; i += 3) {
+    rows.push(drivers.slice(i, i + 3));
+  }
+  return (
+    <div className="ca-cards-container">
+      {rows.map((row, ri) => (
+        <div className="ca-card-row" key={ri}>
+          {row.map(d => (
+            <div className="ca-card" key={d.id}>
+              <div className="ca-card-top-row">
+                <span className="ca-card-title">{d.fullName}</span>
+                <span className="ca-card-tag ca-card-tag--neutral">{d.sex}</span>
+              </div>
+              <div className="ca-card-info-row">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                <span className="ca-card-secondary">{d.address}</span>
+              </div>
+              <div className="ca-card-divider" />
+              <div className="ca-card-meta">
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">License #</span>
+                  <span className="ca-card-meta-value">{d.licNum}</span>
+                </div>
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">State</span>
+                  <span className="ca-card-meta-value">{d.stateLic}</span>
+                </div>
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">Experience</span>
+                  <span className="ca-card-meta-value">{d.yrsExp} yrs</span>
+                </div>
+              </div>
+              <div className="ca-card-bottom-row">
+                <span className="ca-card-secondary">Hired: {d.dateHired}</span>
+                <span className="ca-card-renewal-tag" style={{ color: d.renewalColor, background: d.renewalColor + '14' }}>{d.renewalText}</span>
+              </div>
+            </div>
+          ))}
+          {row.length < 3 && Array.from({ length: 3 - row.length }).map((_, i) => (
+            <div className="ca-card ca-card--empty" key={`empty-${i}`} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function DriverGrid({ drivers }) {
+  return (
+    <div className="ca-grid-wrapper">
+      <table className="ca-grid">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Sex</th>
+            <th>License #</th>
+            <th>State</th>
+            <th>Experience</th>
+            <th>Date Hired</th>
+            <th>Renewal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {drivers.map(d => (
+            <tr key={d.id}>
+              <td>{d.fullName}</td>
+              <td>{d.sex}</td>
+              <td>{d.licNum}</td>
+              <td>{d.stateLic}</td>
+              <td>{d.yrsExp} yrs</td>
+              <td>{d.dateHired}</td>
+              <td style={{ color: d.renewalColor, fontWeight: 600 }}>{d.renewalText}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FilterDropdown({ label, value, options, labels, onChange }) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  const displayLabels = labels || options;
+
+  return (
+    <div className="sidebar-filter" ref={ref} onClick={() => setOpen(!open)}>
+      <span className="sidebar-filter-label">{label}</span>
+      <span className="sidebar-filter-value">{value ? (labels ? displayLabels[options.indexOf(value)] : value) : 'Any'}</span>
+      <span className="sidebar-filter-arrow">▾</span>
+      {open && (
+        <div className="sidebar-filter-menu">
+          <div className="sidebar-filter-option" onClick={(e) => { e.stopPropagation(); onChange(''); setOpen(false); }}><em>Any</em></div>
+          {options.map((opt, i) => (
+            <div
+              key={opt}
+              className={`sidebar-filter-option${opt === value ? ' active' : ''}`}
+              onClick={(e) => { e.stopPropagation(); onChange(opt); setOpen(false); }}
+            >
+              {displayLabels[i]}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

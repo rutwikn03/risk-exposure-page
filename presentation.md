@@ -43,7 +43,7 @@ Connected Underwriting | Commercial Property
 | # | Problem | Impact |
 |---|---------|--------|
 | 1 | **Flat table mixes premises with coverages** | Users can't quickly identify which building they're looking at |
-| 2 | **Repetitive data** — same address on every SOI row | Visual clutter, wasted screen space |
+| 2 | **Repetitive data** — same address on every SOI row | Visual clutter, wasted screen space |when i click remove in subject of insyrance i.e trhat cross
 | 3 | **No premise-level navigation** | Must scroll/search entire table to find one building |
 | 4 | **No building context at a glance** | Construction type, year built hidden as table columns |
 | 5 | **Single dense edit modal** | Overwhelming — all fields visible at once |

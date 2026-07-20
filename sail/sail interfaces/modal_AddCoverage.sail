@@ -142,27 +142,86 @@ a!localVariables(
         }
       ),
       a!sectionLayout(
-        label: "Subjects of Insurance",
-        labelSize: "SMALL",
-        labelColor: "SECONDARY",
+        label: "",
         contents: {
-          a!gridLayout(
-            labelPosition: "COLLAPSED",
-            headerCells: {
-              a!gridLayoutHeaderCell(label: "Subject of Insurance"),
-              a!gridLayoutHeaderCell(label: "Amount"),
-              a!gridLayoutHeaderCell(label: "Coins %"),
-              a!gridLayoutHeaderCell(label: "Valuation"),
-              a!gridLayoutHeaderCell(label: "Cause of Loss"),
-              a!gridLayoutHeaderCell(label: "Inflation Guard"),
-              a!gridLayoutHeaderCell(label: "DED"),
-              a!gridLayoutHeaderCell(label: "BLKT#"),
-              a!gridLayoutHeaderCell(label: "Forms & Conditions"),
-              a!gridLayoutHeaderCell(label: "")
+          /* Header: Title + Add button inline, outside gray box */
+          a!sideBySideLayout(
+            alignVertical: "MIDDLE",
+            items: {
+              a!sideBySideItem(
+                item: a!richTextDisplayField(
+                  labelPosition: "COLLAPSED",
+                  value: a!richTextItem(
+                    text: "Subjects of Insurance",
+                    color: "SECONDARY",
+                    style: "STRONG"
+                  ),
+                  marginBelow: "NONE"
+                )
+              ),
+              a!sideBySideItem(
+                width: "MINIMIZE",
+                item: a!richTextDisplayField(
+                  labelPosition: "COLLAPSED",
+                  value: {
+                    a!richTextIcon(
+                      icon: "plus-circle",
+                      color: "ACCENT",
+                      linkStyle: "STANDALONE",
+                      link: a!dynamicLink(
+                        value: append(
+                          local!coverages,
+                          a!map(subject: null, amount: "", coins: "", valuation: null, cause: null, inflation: "", ded: "", blkt: "", forms: "")
+                        ),
+                        saveInto: local!coverages
+                      )
+                    ),
+                    " ",
+                    a!richTextItem(
+                      text: "Add Subject of Insurance",
+                      color: "ACCENT",
+                      style: "STRONG",
+                      link: a!dynamicLink(
+                        value: append(
+                          local!coverages,
+                          a!map(subject: null, amount: "", coins: "", valuation: null, cause: null, inflation: "", ded: "", blkt: "", forms: "")
+                        ),
+                        saveInto: local!coverages
+                      )
+                    )
+                  },
+                  marginBelow: "NONE"
+                )
+              )
             },
-            rows: a!forEach(
-              items: local!coverages,
-              expression: a!gridRowLayout(
+            marginBelow: "STANDARD"
+          ),
+          /* Gray box with grid - scrollable when rows grow */
+          a!cardLayout(
+            height: "MEDIUM_PLUS",
+            style: "#F5F5F7",
+            showBorder: true,
+            borderColor: "#EDEEFA",
+            shape: "SEMI_ROUNDED",
+            padding: "STANDARD",
+            contents: {
+              a!gridLayout(
+                labelPosition: "COLLAPSED",
+                headerCells: {
+                  a!gridLayoutHeaderCell(label: "Subject of Insurance"),
+                  a!gridLayoutHeaderCell(label: "Amount", width: "NARROW"),
+                  a!gridLayoutHeaderCell(label: "Coins %", width: "ICON_PLUS"),
+                  a!gridLayoutHeaderCell(label: "Valuation"),
+                  a!gridLayoutHeaderCell(label: "Cause of Loss"),
+                  a!gridLayoutHeaderCell(label: "Inflation Guard", width: "NARROW"),
+                  a!gridLayoutHeaderCell(label: "DED", width: "ICON"),
+                  a!gridLayoutHeaderCell(label: "BLKT#", width: "ICON_PLUS"),
+                  a!gridLayoutHeaderCell(label: "Forms & Conditions to Apply", width: "WIDE"),
+                  a!gridLayoutHeaderCell(label: "Action Items", width: "NARROW")
+                },
+                rows: a!forEach(
+                  items: local!coverages,
+                  expression: a!gridRowLayout(
                 contents: {
                   a!dropdownField(
                     labelPosition: "COLLAPSED",
@@ -248,15 +307,10 @@ a!localVariables(
                 }
               )
             ),
-            addRowLink: a!dynamicLink(
-              label: "Add Subject of Insurance",
-              value: append(
-                local!coverages,
-                a!map(subject: null, amount: "", coins: "", valuation: null, cause: null, inflation: "", ded: "", blkt: "", forms: "")
-              ),
-              saveInto: local!coverages
-            ),
+            addRowLink: null,
             selectable: false
+              )
+            }
           )
         }
       )
@@ -279,6 +333,8 @@ a!localVariables(
           submit: true
         )
       }
-    )
+    ),
+    contentsWidth: "FULL",
+    showButtonDivider: true
   )
 )

@@ -6,46 +6,40 @@ a!localVariables(
     contents: {
       a!richTextDisplayField(
         labelPosition: "COLLAPSED",
-        value: {
-          a!richTextItem(text: "You are about to permanently delete "),
-          a!richTextItem(text: local!premiseName, style: "STRONG"),
-          a!richTextItem(text: ".")
-        },
-        marginBelow: "STANDARD"
+        value: a!richTextItem(
+          text: "You are about to permanently remove:"
+        ),
+        marginBelow: "LESS"
+      ),
+      a!richTextDisplayField(
+        labelPosition: "COLLAPSED",
+        value: a!richTextItem(
+          text: local!premiseName,
+          size: "MEDIUM",
+          style: "STRONG"
+        ),
+        marginBelow: "NONE"
       ),
       a!richTextDisplayField(
         labelPosition: "COLLAPSED",
         value: a!richTextItem(
           text: local!premiseAddress,
-          color: "SECONDARY",
-          size: "SMALL"
+          color: "SECONDARY"
         ),
         marginBelow: "STANDARD"
       ),
-      a!stampField(
-        labelPosition: "COLLAPSED",
-        icon: "exclamation-triangle",
-        backgroundColor: "#FFF5E6",
-        contentColor: "#D97706",
-        size: "MEDIUM",
-        align: "CENTER",
-        marginBelow: "STANDARD"
-      ),
-      a!richTextDisplayField(
-        labelPosition: "COLLAPSED",
-        value: a!richTextItem(
-          text: "This premise and all associated coverages will be permanently removed. This action cannot be undone.",
-          color: "NEGATIVE",
-          style: "STRONG"
-        ),
-        align: "CENTER"
+      a!messageBanner(
+        primaryText: "This premise and all associated coverages will be permanently removed. This action cannot be undone.",
+        backgroundColor: "WARN",
+        highlightColor: "WARN",
+        icon: "exclamation-triangle"
       )
     },
     buttons: a!buttonLayout(
       primaryButtons: {
         a!buttonWidget(
           label: "Delete",
-          style: "SOLID",
+          style: "OUTLINE",
           color: "NEGATIVE",
           submit: true,
           loadingIndicator: true
