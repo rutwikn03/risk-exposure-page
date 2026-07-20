@@ -71,11 +71,11 @@ export default function AddDriverModal({ onClose, onAdd }) {
               </div>
             </div>
             <div className="edit-modal-row">
-              <div className="edit-modal-field" style={{ width: 160 }}>
+              <div className="edit-modal-field" style={{ flex: 1 }}>
                 <label>Date of Birth</label>
                 <input type="date" value={fields.dob} onChange={e => update('dob', e.target.value)} />
               </div>
-              <div className="edit-modal-field" style={{ width: 160 }}>
+              <div className="edit-modal-field" style={{ flex: 1 }}>
                 <label>Marital Status</label>
                 <select value={fields.maritalStatus} onChange={e => update('maritalStatus', e.target.value)} className="modal-select">
                   <option value="">Select...</option>
@@ -84,19 +84,17 @@ export default function AddDriverModal({ onClose, onAdd }) {
                   <option value="Divorced">Divorced</option>
                 </select>
               </div>
-            </div>
-            <div className="edit-modal-row">
-              <div className="edit-modal-field" style={{ width: 160 }}>
-                <label>Years Experience</label>
+              <div className="edit-modal-field" style={{ flex: 1 }}>
+                <label>Yrs Experience</label>
                 <input type="text" placeholder="e.g. 5" value={fields.yrsExp} onChange={e => update('yrsExp', e.target.value)} />
               </div>
-              <div className="edit-modal-field" style={{ width: 180 }}>
+              <div className="edit-modal-field" style={{ flex: 1 }}>
                 <label>Date Hired</label>
                 <input type="text" placeholder="e.g. Mar 2019" value={fields.dateHired} onChange={e => update('dateHired', e.target.value)} />
               </div>
-              <div className="edit-modal-field" style={{ width: 140 }}>
+              <div className="edit-modal-field" style={{ flex: 1 }}>
                 <label>Yr LIC (issued)</label>
-                <input type="text" placeholder="e.g. 2028" value={fields.licYear} onChange={e => update('licYear', e.target.value)} />
+                <input type="text" placeholder="e.g. 2023" value={fields.licYear} onChange={e => update('licYear', e.target.value)} />
               </div>
             </div>
           </div>
