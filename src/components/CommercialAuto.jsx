@@ -4,19 +4,17 @@ import EditVehicleModal from './EditVehicleModal';
 import AddDriverModal from './AddDriverModal';
 import EditDriverModal from './EditDriverModal';
 
-// Calculate LIC renewal from license issue year (license valid for 5 years from issue)
+// Calculate LIC renewal from license issue year (avg CDL valid for 5 years)
+// Since licYear is just a year, renewal is also shown in years only
 function calcRenewal(licYear) {
   if (!licYear) return { renewalText: '-', renewalColor: '#999' };
-  const now = new Date();
-  const expiryYear = parseInt(licYear) + 5; // License valid for 5 years from issue
-  const expiry = new Date(expiryYear, 0, 1);
-  const diffMs = expiry - now;
-  const diffMonths = Math.round(diffMs / (1000 * 60 * 60 * 24 * 30.44));
-  if (diffMonths <= 0) return { renewalText: 'Expired', renewalColor: '#991B1B' };
-  if (diffMonths < 12) return { renewalText: `${diffMonths}m left`, renewalColor: '#92400E' };
-  const yrs = Math.floor(diffMonths / 12);
-  const mos = diffMonths % 12;
-  return { renewalText: `${yrs}y ${mos}m left`, renewalColor: '#117C00' };
+  const currentYear = new Date().getFullYear();
+  const issueYear = parseInt(licYear);
+  const expiryYear = issueYear + 5;
+  const yearsLeft = expiryYear - currentYear;
+  if (yearsLeft <= 0) return { renewalText: 'Expired', renewalColor: '#991B1B' };
+  if (yearsLeft === 1) return { renewalText: '1 yr left', renewalColor: '#92400E' };
+  return { renewalText: `${yearsLeft} yrs left`, renewalColor: '#117C00' };
 }
 
 const baseVehicles = [
