@@ -46,30 +46,30 @@ const baseVehicles = [
 ];
 
 const baseDrivers = [
-  { id: 1, fullName: "Marcus D. Johnson", sex: "Male", licNum: "3849 2918 8291", stateLic: "TX", licYear: "2029", yrsExp: "12", dateHired: "Mar 2019", address: "1847 Elm Creek Dr, Arlington, TX" },
-  { id: 2, fullName: "Sarah K. Okonkwo", sex: "Female", licNum: "D723 4567", stateLic: "CA", licYear: "2027", yrsExp: "8", dateHired: "Jun 2021", address: "2290 Sunset Blvd, LA, CA" },
-  { id: 3, fullName: "Robert A. Chen", sex: "Male", licNum: "C432 1010 98", stateLic: "IL", licYear: "2028", yrsExp: "22", dateHired: "Jan 2017", address: "4410 N Ashland Ave, Chicago, IL" },
-  { id: 4, fullName: "Diana L. Morales", sex: "Female", licNum: "M893 4782 3", stateLic: "FL", licYear: "2025", yrsExp: "5", dateHired: "Nov 2022", address: "780 Brickell Ave, Miami, FL" },
-  { id: 5, fullName: "James T. Whitfield", sex: "Male", licNum: "W293 8554 0", stateLic: "NY", licYear: "2030", yrsExp: "15", dateHired: "Apr 2018", address: "312 E 84th St, New York, NY" },
-  { id: 6, fullName: "Priya R. Nair", sex: "Female", licNum: "N567 8210 9", stateLic: "TX", licYear: "2027", yrsExp: "3", dateHired: "Sep 2023", address: "6701 Forest Ln, Dallas, TX" },
-  { id: 7, fullName: "Anthony B. Rivera", sex: "Male", licNum: "R234 5678 1", stateLic: "GA", licYear: "2028", yrsExp: "9", dateHired: "Feb 2020", address: "3420 Peachtree Rd NE, Atlanta, GA" },
-  { id: 8, fullName: "Michelle K. Thompson", sex: "Female", licNum: "T891 2345 6", stateLic: "TX", licYear: "2029", yrsExp: "18", dateHired: "Aug 2016", address: "5500 Preston Rd, Dallas, TX" },
-  { id: 9, fullName: "David W. Park", sex: "Male", licNum: "P456 7890 2", stateLic: "CA", licYear: "2026", yrsExp: "6", dateHired: "Jan 2022", address: "1800 Ocean Ave, Santa Monica, CA" },
-  { id: 10, fullName: "Lisa M. O'Brien", sex: "Female", licNum: "O123 4567 8", stateLic: "IL", licYear: "2025", yrsExp: "2", dateHired: "Mar 2024", address: "2200 W Division St, Chicago, IL" },
-  { id: 11, fullName: "Carlos E. Gutierrez", sex: "Male", licNum: "G678 9012 3", stateLic: "FL", licYear: "2030", yrsExp: "25", dateHired: "Jun 2014", address: "900 Biscayne Blvd, Miami, FL" },
-  { id: 12, fullName: "Jennifer A. Walsh", sex: "Female", licNum: "W345 6789 0", stateLic: "NY", licYear: "2028", yrsExp: "11", dateHired: "Oct 2019", address: "450 W 33rd St, New York, NY" },
-  { id: 13, fullName: "Kevin R. Patel", sex: "Male", licNum: "P789 0123 4", stateLic: "TX", licYear: "2027", yrsExp: "4", dateHired: "May 2023", address: "2100 Main St, Houston, TX" },
-  { id: 14, fullName: "Amanda J. Foster", sex: "Female", licNum: "F012 3456 7", stateLic: "CO", licYear: "2029", yrsExp: "14", dateHired: "Sep 2018", address: "750 Corporate Dr, Denver, CO" },
-  { id: 15, fullName: "William H. Nakamura", sex: "Male", licNum: "N890 1234 5", stateLic: "CA", licYear: "2025", yrsExp: "7", dateHired: "Dec 2020", address: "600 Harbor Blvd, Long Beach, CA" },
-  { id: 16, fullName: "Stephanie L. Adams", sex: "Female", licNum: "A567 8901 2", stateLic: "TN", licYear: "2030", yrsExp: "20", dateHired: "Mar 2015", address: "3400 Trucking Ln, Memphis, TN" },
-  { id: 17, fullName: "Brian P. Kowalski", sex: "Male", licNum: "K234 5678 9", stateLic: "PA", licYear: "2027", yrsExp: "10", dateHired: "Jul 2020", address: "1500 Market St, Philadelphia, PA" },
-  { id: 18, fullName: "Rachel N. Singh", sex: "Female", licNum: "S901 2345 6", stateLic: "TX", licYear: "2028", yrsExp: "16", dateHired: "Apr 2017", address: "8900 I-40 West, Amarillo, TX" },
-  { id: 19, fullName: "Thomas G. Fitzgerald", sex: "Male", licNum: "F678 9012 3", stateLic: "IL", licYear: "2026", yrsExp: "1", dateHired: "Jan 2025", address: "1200 Logistics Pkwy, Chicago, IL" },
-  { id: 20, fullName: "Olivia C. Yamamoto", sex: "Female", licNum: "Y345 6789 0", stateLic: "FL", licYear: "2030", yrsExp: "19", dateHired: "Nov 2015", address: "9100 SW 40th St, Miami, FL" },
-  { id: 21, fullName: "Derek M. Sullivan", sex: "Male", licNum: "S012 3456 7", stateLic: "NY", licYear: "2028", yrsExp: "13", dateHired: "Aug 2019", address: "789 Broadway, New York, NY" },
-  { id: 22, fullName: "Maria T. Vasquez", sex: "Female", licNum: "V789 0123 4", stateLic: "CA", licYear: "2025", yrsExp: "8", dateHired: "Feb 2021", address: "890 Commerce Way, Los Angeles, CA" },
-  { id: 23, fullName: "Patrick J. Murphy", sex: "Male", licNum: "M456 7890 1", stateLic: "GA", licYear: "2029", yrsExp: "17", dateHired: "Jun 2016", address: "7820 Peachtree Rd, Atlanta, GA" },
-  { id: 24, fullName: "Nicole R. Kim", sex: "Female", licNum: "K123 4567 8", stateLic: "TX", licYear: "2027", yrsExp: "6", dateHired: "Apr 2022", address: "4521 Industrial Blvd, Dallas, TX" },
+  { id: 1, fullName: "Marcus D. Johnson", sex: "Male", licNum: "3849 2918 8291", stateLic: "TX", licYear: "2029", yrsExp: "12", dateHired: "Mar 2019", address: "1847 Elm Creek Dr, Arlington, TX", dob: "1987-04-12", maritalStatus: "Married" },
+  { id: 2, fullName: "Sarah K. Okonkwo", sex: "Female", licNum: "D723 4567", stateLic: "CA", licYear: "2027", yrsExp: "8", dateHired: "Jun 2021", address: "2290 Sunset Blvd, LA, CA", dob: "1992-08-23", maritalStatus: "Single" },
+  { id: 3, fullName: "Robert A. Chen", sex: "Male", licNum: "C432 1010 98", stateLic: "IL", licYear: "2028", yrsExp: "22", dateHired: "Jan 2017", address: "4410 N Ashland Ave, Chicago, IL", dob: "1978-11-05", maritalStatus: "Married" },
+  { id: 4, fullName: "Diana L. Morales", sex: "Female", licNum: "M893 4782 3", stateLic: "FL", licYear: "2025", yrsExp: "5", dateHired: "Nov 2022", address: "780 Brickell Ave, Miami, FL", dob: "1995-02-18", maritalStatus: "Single" },
+  { id: 5, fullName: "James T. Whitfield", sex: "Male", licNum: "W293 8554 0", stateLic: "NY", licYear: "2030", yrsExp: "15", dateHired: "Apr 2018", address: "312 E 84th St, New York, NY", dob: "1983-06-30", maritalStatus: "Married" },
+  { id: 6, fullName: "Priya R. Nair", sex: "Female", licNum: "N567 8210 9", stateLic: "TX", licYear: "2027", yrsExp: "3", dateHired: "Sep 2023", address: "6701 Forest Ln, Dallas, TX", dob: "1997-09-14", maritalStatus: "Single" },
+  { id: 7, fullName: "Anthony B. Rivera", sex: "Male", licNum: "R234 5678 1", stateLic: "GA", licYear: "2028", yrsExp: "9", dateHired: "Feb 2020", address: "3420 Peachtree Rd NE, Atlanta, GA", dob: "1990-01-22", maritalStatus: "Married" },
+  { id: 8, fullName: "Michelle K. Thompson", sex: "Female", licNum: "T891 2345 6", stateLic: "TX", licYear: "2029", yrsExp: "18", dateHired: "Aug 2016", address: "5500 Preston Rd, Dallas, TX", dob: "1980-07-09", maritalStatus: "Divorced" },
+  { id: 9, fullName: "David W. Park", sex: "Male", licNum: "P456 7890 2", stateLic: "CA", licYear: "2026", yrsExp: "6", dateHired: "Jan 2022", address: "1800 Ocean Ave, Santa Monica, CA", dob: "1993-12-03", maritalStatus: "Single" },
+  { id: 10, fullName: "Lisa M. O'Brien", sex: "Female", licNum: "O123 4567 8", stateLic: "IL", licYear: "2025", yrsExp: "2", dateHired: "Mar 2024", address: "2200 W Division St, Chicago, IL", dob: "1999-05-27", maritalStatus: "Single" },
+  { id: 11, fullName: "Carlos E. Gutierrez", sex: "Male", licNum: "G678 9012 3", stateLic: "FL", licYear: "2030", yrsExp: "25", dateHired: "Jun 2014", address: "900 Biscayne Blvd, Miami, FL", dob: "1975-03-16", maritalStatus: "Married" },
+  { id: 12, fullName: "Jennifer A. Walsh", sex: "Female", licNum: "W345 6789 0", stateLic: "NY", licYear: "2028", yrsExp: "11", dateHired: "Oct 2019", address: "450 W 33rd St, New York, NY", dob: "1988-10-08", maritalStatus: "Married" },
+  { id: 13, fullName: "Kevin R. Patel", sex: "Male", licNum: "P789 0123 4", stateLic: "TX", licYear: "2027", yrsExp: "4", dateHired: "May 2023", address: "2100 Main St, Houston, TX", dob: "1996-07-21", maritalStatus: "Single" },
+  { id: 14, fullName: "Amanda J. Foster", sex: "Female", licNum: "F012 3456 7", stateLic: "CO", licYear: "2029", yrsExp: "14", dateHired: "Sep 2018", address: "750 Corporate Dr, Denver, CO", dob: "1984-12-11", maritalStatus: "Married" },
+  { id: 15, fullName: "William H. Nakamura", sex: "Male", licNum: "N890 1234 5", stateLic: "CA", licYear: "2025", yrsExp: "7", dateHired: "Dec 2020", address: "600 Harbor Blvd, Long Beach, CA", dob: "1991-04-29", maritalStatus: "Single" },
+  { id: 16, fullName: "Stephanie L. Adams", sex: "Female", licNum: "A567 8901 2", stateLic: "TN", licYear: "2030", yrsExp: "20", dateHired: "Mar 2015", address: "3400 Trucking Ln, Memphis, TN", dob: "1979-08-14", maritalStatus: "Divorced" },
+  { id: 17, fullName: "Brian P. Kowalski", sex: "Male", licNum: "K234 5678 9", stateLic: "PA", licYear: "2027", yrsExp: "10", dateHired: "Jul 2020", address: "1500 Market St, Philadelphia, PA", dob: "1989-02-06", maritalStatus: "Married" },
+  { id: 18, fullName: "Rachel N. Singh", sex: "Female", licNum: "S901 2345 6", stateLic: "TX", licYear: "2028", yrsExp: "16", dateHired: "Apr 2017", address: "8900 I-40 West, Amarillo, TX", dob: "1982-11-19", maritalStatus: "Married" },
+  { id: 19, fullName: "Thomas G. Fitzgerald", sex: "Male", licNum: "F678 9012 3", stateLic: "IL", licYear: "2026", yrsExp: "1", dateHired: "Jan 2025", address: "1200 Logistics Pkwy, Chicago, IL", dob: "2000-06-03", maritalStatus: "Single" },
+  { id: 20, fullName: "Olivia C. Yamamoto", sex: "Female", licNum: "Y345 6789 0", stateLic: "FL", licYear: "2030", yrsExp: "19", dateHired: "Nov 2015", address: "9100 SW 40th St, Miami, FL", dob: "1981-09-25", maritalStatus: "Married" },
+  { id: 21, fullName: "Derek M. Sullivan", sex: "Male", licNum: "S012 3456 7", stateLic: "NY", licYear: "2028", yrsExp: "13", dateHired: "Aug 2019", address: "789 Broadway, New York, NY", dob: "1986-03-17", maritalStatus: "Divorced" },
+  { id: 22, fullName: "Maria T. Vasquez", sex: "Female", licNum: "V789 0123 4", stateLic: "CA", licYear: "2025", yrsExp: "8", dateHired: "Feb 2021", address: "890 Commerce Way, Los Angeles, CA", dob: "1994-01-08", maritalStatus: "Single" },
+  { id: 23, fullName: "Patrick J. Murphy", sex: "Male", licNum: "M456 7890 1", stateLic: "GA", licYear: "2029", yrsExp: "17", dateHired: "Jun 2016", address: "7820 Peachtree Rd, Atlanta, GA", dob: "1981-05-22", maritalStatus: "Married" },
+  { id: 24, fullName: "Nicole R. Kim", sex: "Female", licNum: "K123 4567 8", stateLic: "TX", licYear: "2027", yrsExp: "6", dateHired: "Apr 2022", address: "4521 Industrial Blvd, Dallas, TX", dob: "1996-10-30", maritalStatus: "Single" },
 ];
 
 const bodyTypeColors = { Van: "#2322F0", Truck: "#117C00", Sedan: "#636363", Semi: "#92400E", SUV: "#555", "Box Truck": "#333" };
@@ -516,9 +516,18 @@ function DriverCards({ drivers, onEdit, onDelete }) {
                   <span className="ca-card-meta-value">{d.yrsExp} yrs</span>
                 </div>
               </div>
+              <div className="ca-card-meta">
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">DOB</span>
+                  <span className="ca-card-meta-value">{d.dob || '-'}</span>
+                </div>
+                <div className="ca-card-meta-item">
+                  <span className="ca-card-meta-label">Yr LIC / Renewal</span>
+                  {(() => { const r = calcRenewal(d.licYear); return <span className="ca-card-meta-value" style={{ color: r.renewalColor }}>{d.licYear || '-'} · {r.renewalText}</span>; })()}
+                </div>
+              </div>
               <div className="ca-card-bottom-row">
                 <span className="ca-card-secondary">Hired: {d.dateHired}</span>
-                {(() => { const r = calcRenewal(d.licYear); return <span className="ca-card-renewal-tag" style={{ color: r.renewalColor, background: r.renewalColor + '14' }}>LIC Renewal: {r.renewalText}</span>; })()}
               </div>
             </div>
           ))}
@@ -539,25 +548,32 @@ function DriverGrid({ drivers }) {
           <tr>
             <th>Full Name</th>
             <th>Sex</th>
+            <th>DOB</th>
+            <th>Marital Status</th>
             <th>License #</th>
             <th>State</th>
             <th>Experience</th>
             <th>Date Hired</th>
-            <th>License Renewal</th>
+            <th>Yr LIC / Renewal</th>
           </tr>
         </thead>
         <tbody>
-          {drivers.map(d => (
-            <tr key={d.id}>
-              <td>{d.fullName}</td>
-              <td>{d.sex}</td>
-              <td>{d.licNum}</td>
-              <td>{d.stateLic}</td>
-              <td>{d.yrsExp} yrs</td>
-              <td>{d.dateHired}</td>
-              <td style={{ color: calcRenewal(d.licYear).renewalColor, fontWeight: 600 }}>{calcRenewal(d.licYear).renewalText}</td>
-            </tr>
-          ))}
+          {drivers.map(d => {
+            const r = calcRenewal(d.licYear);
+            return (
+              <tr key={d.id}>
+                <td>{d.fullName}</td>
+                <td>{d.sex}</td>
+                <td>{d.dob || '-'}</td>
+                <td>{d.maritalStatus || '-'}</td>
+                <td>{d.licNum}</td>
+                <td>{d.stateLic}</td>
+                <td>{d.yrsExp} yrs</td>
+                <td>{d.dateHired}</td>
+                <td style={{ color: r.renewalColor, fontWeight: 600 }}>{d.licYear || '-'} · {r.renewalText}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
