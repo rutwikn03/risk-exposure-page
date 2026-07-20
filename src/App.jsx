@@ -23,7 +23,7 @@ export default function App() {
     }
     return 'login';
   });
-  const [activePage, setActivePage] = useState(() => localStorage.getItem('app_active_page') || 'real-estate');
+  const [activePage, setActivePage] = useState(() => localStorage.getItem('app_active_page') || 'commercial-auto');
   const [locations, setLocations] = useState(locationsData);
   const [soiData, setSoiData] = useState(soiDataImport);
   const [selectedLocation, setSelectedLocation] = useState(locationsData[0].name);
