@@ -231,7 +231,7 @@ a!localVariables(
                   a!gridColumn(label: "State", value: fv!row.stateLic, width: "ICON_PLUS"),
                   a!gridColumn(label: "Cost New", value: fv!row.costNew, width: "NARROW"),
                   a!gridColumn(label: "Coverages", value: fv!row.coverages)
-                }, pageSize: 100, showPaging: false, shadeAlternateRows: false)
+                }, pageSize: 100)
               ),
 
               /* ===== CONTENT: DRIVERS ===== */
@@ -344,7 +344,7 @@ a!localVariables(
                     local!yl: (tointeger(fv!row.licYear) + 5) - local!currentYear,
                     fv!row.licYear & " · " & if(local!yl < 0, "Expired", if(local!yl = 0, "Expires this yr", if(local!yl = 1, "1 yr left", tostring(local!yl) & " yrs left")))
                   ))
-                }, pageSize: 100, showPaging: false, shadeAlternateRows: false)
+                }, pageSize: 100)
               )
             )
           }
