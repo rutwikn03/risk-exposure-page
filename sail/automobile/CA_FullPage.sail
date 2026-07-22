@@ -60,7 +60,7 @@ a!localVariables(
                     a!cardLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: "Loss History", align: "CENTER")}, marginBelow: "NONE", style: "#efefef", showBorder: false)
                   }),
                   a!columnLayout(contents: {
-                    a!cardLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Risk Exposure", color: "ACCENT", style: "STRONG"), align: "CENTER", marginBelow: "NONE")}, marginBelow: "NONE", style: "NONE", borderColor: "ACCENT", shape: "SEMI_ROUNDED")
+                    a!cardLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Risk Exposure", color: "ACCENT", style: "STRONG"), marginBelow: "NONE", align: "CENTER")}, marginBelow: "NONE", style: "NONE", borderColor: "ACCENT", shape: "SEMI_ROUNDED")
                   })
                 }, marginBelow: "NONE", spacing: "DENSE")
               },
@@ -82,294 +82,314 @@ a!localVariables(
       panes: {
         /* ===== LEFT PANE: Text nav with blue left bar ===== */
         a!pane(
-          width: "NARROW",
-          padding: "NONE",
           contents: {
             a!cardLayout(
-              style: "#FFFFFF", showBorder: false, padding: "STANDARD", marginBelow: "NONE",
               contents: {
                 /* Vehicle Information */
                 a!cardLayout(
                   contents: {
-                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Vehicle Information", style: if(local!activeNav = "vehicles", "STRONG", "PLAIN"), color: if(local!activeNav = "vehicles", "STANDARD", "SECONDARY")), marginBelow: "NONE")
+                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Vehicle Information", color: if(local!activeNav = "vehicles", "STANDARD", "SECONDARY"), style: if(local!activeNav = "vehicles", "STRONG", "PLAIN")), marginBelow: "NONE")
                   },
-                  link: a!dynamicLink(value: "vehicles", saveInto: local!activeNav),
-                  padding: "STANDARD", marginBelow: "LESS", shape: "SQUARED",
+                  link: a!dynamicLink(value: "vehicles", saveInto: local!activeNav), marginBelow: "LESS",
                   style: if(local!activeNav = "vehicles", "#EDF2FF", "#FFFFFF"),
                   showBorder: if(local!activeNav = "vehicles", true, false),
-                  borderColor: if(local!activeNav = "vehicles", "ACCENT", "STANDARD")
+                  borderColor: if(local!activeNav = "vehicles", "ACCENT", "STANDARD"),
+                  padding: "STANDARD", shape: "SQUARED"
                 ),
                 /* Driver Information */
                 a!cardLayout(
                   contents: {
-                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Driver Information", style: if(local!activeNav = "drivers", "STRONG", "PLAIN"), color: if(local!activeNav = "drivers", "STANDARD", "SECONDARY")), marginBelow: "NONE")
+                    a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Driver Information", color: if(local!activeNav = "drivers", "STANDARD", "SECONDARY"), style: if(local!activeNav = "drivers", "STRONG", "PLAIN")), marginBelow: "NONE")
                   },
-                  link: a!dynamicLink(value: "drivers", saveInto: local!activeNav),
-                  padding: "STANDARD", marginBelow: "LESS", shape: "SQUARED",
+                  link: a!dynamicLink(value: "drivers", saveInto: local!activeNav), marginBelow: "LESS",
                   style: if(local!activeNav = "drivers", "#EDF2FF", "#FFFFFF"),
                   showBorder: if(local!activeNav = "drivers", true, false),
-                  borderColor: if(local!activeNav = "drivers", "ACCENT", "STANDARD")
+                  borderColor: if(local!activeNav = "drivers", "ACCENT", "STANDARD"),
+                  padding: "STANDARD", shape: "SQUARED"
                 )
-              }
+              }, marginBelow: "NONE",
+              style: "#FFFFFF", showBorder: false, padding: "STANDARD"
             )
-          }
+          },
+          width: "NARROW",
+          padding: "NONE"
         ),
 
         /* ===== RIGHT PANE: Content ===== */
         a!pane(
-          width: "AUTO",
-          backgroundColor: "#FAFAFC",
-          padding: "STANDARD",
           contents: {
             if(local!activeNav = "vehicles",
-              /* ========== VEHICLE PANE ========== */
-              {
-                /* Row 1: Title + Add + Edit */
-                a!sideBySideLayout(
-                  alignVertical: "MIDDLE",
-                  items: {
-                    a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Vehicle Information", style: "STRONG", size: "MEDIUM", color: "SECONDARY"), marginBelow: "NONE")),
-                    a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Vehicle", icon: "plus", size: "SMALL", style: "SOLID"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE"))
-                  },
-                  marginBelow: "STANDARD"
-                ),
-                /* Row 2: Search + Filters + Cards/Grid toggle */
-                a!sideBySideLayout(
-                  alignVertical: "MIDDLE", spacing: "STANDARD",
-                  items: {
-                    a!sideBySideItem(width: "MINIMIZE", item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search vehicles...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Body Type", choiceLabels: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}, choiceValues: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}, value: local!filterBodyType, saveInto: local!filterBodyType)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}, value: local!filterState, saveInto: local!filterState)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
-                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
-                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
-                    }, marginBelow: "NONE"))
-                  },
-                  marginBelow: "STANDARD"
-                ),
-                /* Vehicle content */
-                if(local!activeView = "cards",
-                a!forEach(
-                  items: enumerate(ceiling(count(local!vehicles) / 3, 1)),
-                  expression: a!columnsLayout(
-                    columns: {
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 1) <= count(local!vehicles),
-                        a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 1, a!map()),
-                          a!cardLayout(contents: {
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.vin, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      )),
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 2) <= count(local!vehicles),
-                        a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 2, a!map()),
-                          a!cardLayout(contents: {
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.vin, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      )),
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!vehicles),
-                        a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 3, a!map()),
-                          a!cardLayout(contents: {
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.vin, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      ))
-                    }, spacing: "STANDARD", marginBelow: "LESS"
+            /* ========== VEHICLE PANE ========== */
+            {
+              /* Row 1: Title + Add + Edit */
+              a!sideBySideLayout(
+                items: {
+                  a!sideBySideItem(item: a!sectionLayout(label: "Vehicle Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {})),
+                  a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
+                  a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Vehicle", size: "SMALL", icon: "plus", style: "SOLID"), marginBelow: "NONE"),width: "MINIMIZE"),
+                  a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", size: "SMALL", icon: "pencil", style: "OUTLINE"), marginBelow: "NONE"),width: "MINIMIZE")
+                },
+                marginBelow: "STANDARD",
+                alignVertical: "MIDDLE"
+              ),
+              a!columnsLayout(
+                columns: {
+                  a!columnLayout(
+                    contents: {
+                      a!sideBySideLayout(
+                        items: {
+                          a!sideBySideItem( item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search vehicles...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS"),width: "MINIMIZE"),
+                          a!sideBySideItem( item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Body Type", value: local!filterBodyType, saveInto: local!filterBodyType, choiceLabels: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}, choiceValues: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}),width: "MINIMIZE"),
+                          a!sideBySideItem( item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", value: local!filterState, saveInto: local!filterState, choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}),width: "MINIMIZE")
+                        }
+                      )
+                    }
+                  ),
+                  a!columnLayout(
+                    contents: {
+                      a!sideBySideLayout(
+                        items: {
+                          a!sideBySideItem(
+                            item: {
+                              a!buttonArrayLayout(
+                                buttons: {
+                                  a!buttonWidget(label: "Cards", saveInto: a!save(local!activeView, "cards"), size: "SMALL", icon: "th-large", style: if(local!activeView = "cards", "SOLID", "OUTLINE")),
+                                  a!buttonWidget(label: "Grid", saveInto: a!save(local!activeView, "grid"), size: "SMALL", icon: "bars", style: if(local!activeView = "grid", "SOLID", "OUTLINE"))
+                                },
+                                align: "END"
+                              )
+                            }
+                          )
+                        }
+                      )
+                    }
                   )
-                ),
-                /* VEHICLE GRID */
-                a!gridField(labelPosition: "COLLAPSED", data: local!vehicles, columns: {
-                  a!gridColumn(label: "Year, Make, Model", value: fv!row.yearMakeModel),
-                  a!gridColumn(label: "Body Type", value: fv!row.bodyType, width: "NARROW"),
-                  a!gridColumn(label: "V.I.N", value: fv!row.vin),
-                  a!gridColumn(label: "Address", value: fv!row.address),
-                  a!gridColumn(label: "State", value: fv!row.stateLic, width: "ICON_PLUS"),
-                  a!gridColumn(label: "Cost New", value: fv!row.costNew, width: "NARROW"),
-                  a!gridColumn(label: "Coverages", value: fv!row.coverages)
-                }, pageSize: 100)
+                }
+              ),
+              /* Vehicle content */
+              if(local!activeView = "cards",
+              a!forEach(
+                items: enumerate(ceiling(count(local!vehicles) / 3, 1)),
+                expression: a!columnsLayout(
+                  columns: {
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 1) <= count(local!vehicles),
+                    a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 1, a!map()),
+                    a!cardLayout(contents: {
+                      a!sideBySideLayout( items: {
+                        a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", size: "SMALL", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG"), marginBelow: "NONE"),width: "MINIMIZE"),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                      }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                      a!columnsLayout(columns: {
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                      }, marginBelow: "LESS", spacing: "DENSE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
+                    }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    )),
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 2) <= count(local!vehicles),
+                    a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 2, a!map()),
+                    a!cardLayout(contents: {
+                      a!sideBySideLayout( items: {
+                        a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", size: "SMALL", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG"), marginBelow: "NONE"),width: "MINIMIZE"),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                      }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                      a!columnsLayout(columns: {
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                      }, marginBelow: "LESS", spacing: "DENSE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
+                    }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    )),
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!vehicles),
+                    a!localVariables(local!v: index(local!vehicles, (fv!index - 1) * 3 + 3, a!map()),
+                    a!cardLayout(contents: {
+                      a!sideBySideLayout( items: {
+                        a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.yearMakeModel, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!v.bodyType & " ", size: "SMALL", color: if(local!v.bodyType = "Van", "#2322F0", if(local!v.bodyType = "Truck", "#117C00", if(local!v.bodyType = "Semi", "#92400E", "#636363"))), style: "STRONG"), marginBelow: "NONE"),width: "MINIMIZE"),
+                        a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                      }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                      a!columnsLayout(columns: {
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                      }, marginBelow: "LESS", spacing: "DENSE"),
+                      a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
+                    }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    ))
+                  }, marginBelow: "LESS", spacing: "STANDARD"
+                )
+              ),
+              /* VEHICLE GRID */
+              a!gridField(labelPosition: "COLLAPSED", data: local!vehicles, columns: {
+                a!gridColumn(label: "Year, Make, Model", value: fv!row.yearMakeModel),
+                a!gridColumn(label: "Body Type", value: fv!row.bodyType, width: "NARROW"),
+                a!gridColumn(label: "V.I.N", value: fv!row.vin),
+                a!gridColumn(label: "Address", value: fv!row.address),
+                a!gridColumn(label: "State", value: fv!row.stateLic, width: "ICON_PLUS"),
+                a!gridColumn(label: "Cost New", value: fv!row.costNew, width: "NARROW"),
+                a!gridColumn(label: "Coverages", value: fv!row.coverages)
+              }, pageSize: 100)
               )
-              },
+            },
 
-              /* ========== DRIVER PANE ========== */
-              {
-                /* Row 1: Title + Add + Edit */
-                a!sideBySideLayout(
-                  alignVertical: "MIDDLE",
-                  items: {
-                    a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Driver Information", style: "STRONG", size: "MEDIUM", color: "SECONDARY"), marginBelow: "NONE")),
-                    a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Driver", icon: "plus", size: "SMALL", style: "SOLID"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE"))
-                  },
-                  marginBelow: "STANDARD"
-                ),
-                /* Row 2: Search + Filters + Cards/Grid toggle */
-                a!sideBySideLayout(
-                  alignVertical: "MIDDLE", spacing: "STANDARD",
-                  items: {
-                    a!sideBySideItem(width: "MINIMIZE", item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search drivers...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}, value: local!filterState, saveInto: local!filterState)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Experience", choiceLabels: {"0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"}, choiceValues: {"0-5","6-10","11-15","16-20","20+"}, value: local!filterExp, saveInto: local!filterExp)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
-                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
-                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
-                    }, marginBelow: "NONE"))
-                  },
-                  marginBelow: "STANDARD"
-                ),
-                /* Driver content */
-                if(local!activeView = "cards",
-                /* DRIVER CARDS - 3 per row */
-                a!forEach(
-                  items: enumerate(ceiling(count(local!drivers) / 3, 1)),
-                  expression: a!columnsLayout(
-                    columns: {
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 1) <= count(local!drivers),
-                        a!localVariables(
-                          local!d: index(local!drivers, (fv!index - 1) * 3 + 1, a!map()),
-                          local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
-                          local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
-                          local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
-                          a!cardLayout(contents: {
-                            /* Name + Sex + Menu */
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", color: "SECONDARY", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            /* Address */
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            /* License # | State | Experience */
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licNum, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            /* DOB | Hired | Yr LIC / Renewal */
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dob, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      )),
-                      /* Columns 2 & 3 follow same pattern */
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 2) <= count(local!drivers),
-                        a!localVariables(
-                          local!d: index(local!drivers, (fv!index - 1) * 3 + 2, a!map()),
-                          local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
-                          local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
-                          local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
-                          a!cardLayout(contents: {
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", color: "SECONDARY", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licNum, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dob, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      )),
-                      a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!drivers),
-                        a!localVariables(
-                          local!d: index(local!drivers, (fv!index - 1) * 3 + 3, a!map()),
-                          local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
-                          local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
-                          local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
-                          a!cardLayout(contents: {
-                            a!sideBySideLayout(alignVertical: "MIDDLE", items: {
-                              a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, style: "STRONG", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", color: "SECONDARY", size: "SMALL"), marginBelow: "NONE")),
-                              a!sideBySideItem(width: "MINIMIZE", item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"))
-                            }, marginBelow: "LESS"),
-                            a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, color: "SECONDARY", size: "SMALL")}, marginBelow: "LESS"),
-                            a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licNum, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.stateLic, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "LESS", spacing: "DENSE"),
-                            a!columnsLayout(columns: {
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dob, style: "STRONG", size: "SMALL")}, marginBelow: "NONE")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
-                              a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
-                            }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
-                        ), {}
-                      ))
-                    }, spacing: "STANDARD", marginBelow: "LESS"
-                  )
-                ),
-                /* DRIVER GRID */
-                a!gridField(labelPosition: "COLLAPSED", data: local!drivers, columns: {
-                  a!gridColumn(label: "Full Name", value: fv!row.fullName),
-                  a!gridColumn(label: "Sex", value: fv!row.sex, width: "ICON_PLUS"),
-                  a!gridColumn(label: "DOB", value: fv!row.dob, width: "NARROW"),
-                  a!gridColumn(label: "Marital Status", value: fv!row.maritalStatus, width: "NARROW"),
-                  a!gridColumn(label: "License #", value: fv!row.licNum),
-                  a!gridColumn(label: "State", value: fv!row.stateLic, width: "ICON_PLUS"),
-                  a!gridColumn(label: "Experience", value: fv!row.yrsExp & " yrs", width: "NARROW"),
-                  a!gridColumn(label: "Date Hired", value: fv!row.dateHired, width: "NARROW"),
-                  a!gridColumn(label: "Yr LIC / Renewal", value: a!localVariables(
-                    local!yl: (tointeger(fv!row.licYear) + 5) - local!currentYear,
-                    fv!row.licYear & " · " & if(local!yl < 0, "Expired", if(local!yl = 0, "Expires this yr", if(local!yl = 1, "1 yr left", tostring(local!yl) & " yrs left")))
-                  ))
-                }, pageSize: 100)
+            /* ========== DRIVER PANE ========== */
+            {
+              /* Row 1: Title + Add + Edit */
+              a!sideBySideLayout(
+                items: {
+                  a!sideBySideItem(item: a!sectionLayout(label: "Driver Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {})),
+                  a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
+                  a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Driver", size: "SMALL", icon: "plus", style: "SOLID"), marginBelow: "NONE"),width: "MINIMIZE"),
+                  a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", size: "SMALL", icon: "pencil", style: "OUTLINE"), marginBelow: "NONE"),width: "MINIMIZE")
+                },
+                marginBelow: "STANDARD",
+                alignVertical: "MIDDLE"
+              ),
+              /* Row 2: Search + Filters + Cards/Grid toggle */
+              a!sideBySideLayout(
+                items: {
+                  a!sideBySideItem( item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search drivers...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS"),width: "MINIMIZE"),
+                  a!sideBySideItem( item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", value: local!filterState, saveInto: local!filterState, choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}),width: "MINIMIZE"),
+                  a!sideBySideItem( item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Experience", value: local!filterExp, saveInto: local!filterExp, choiceLabels: {"0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"}, choiceValues: {"0-5","6-10","11-15","16-20","20+"}),width: "MINIMIZE"),
+                  a!sideBySideItem( item: a!buttonArrayLayout(buttons: {
+                    a!buttonWidget(label: "Cards", saveInto: a!save(local!activeView, "cards"), size: "SMALL", icon: "th-large", style: if(local!activeView = "cards", "SOLID", "OUTLINE")),
+                    a!buttonWidget(label: "Grid", saveInto: a!save(local!activeView, "grid"), size: "SMALL", icon: "bars", style: if(local!activeView = "grid", "SOLID", "OUTLINE"))
+                  }, marginBelow: "NONE"),width: "MINIMIZE")
+                },
+                marginBelow: "STANDARD",
+                alignVertical: "MIDDLE", spacing: "STANDARD"
+              ),
+              /* Driver content */
+              if(local!activeView = "cards",
+              /* DRIVER CARDS - 3 per row */
+              a!forEach(
+                items: enumerate(ceiling(count(local!drivers) / 3, 1)),
+                expression: a!columnsLayout(
+                  columns: {
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 1) <= count(local!drivers),
+                    a!localVariables(
+                      local!d: index(local!drivers, (fv!index - 1) * 3 + 1, a!map()),
+                      local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
+                      local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
+                      local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
+                      a!cardLayout(contents: {
+                        /* Name + Sex + Menu */
+                        a!sideBySideLayout( items: {
+                          a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", size: "SMALL", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE"),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                        }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                        /* Address */
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                        /* License # | State | Experience */
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "LESS", spacing: "DENSE"),
+                        /* DOB | Hired | Yr LIC / Renewal */
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "NONE", spacing: "DENSE")
+                      }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    )),
+                    /* Columns 2 & 3 follow same pattern */
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 2) <= count(local!drivers),
+                    a!localVariables(
+                      local!d: index(local!drivers, (fv!index - 1) * 3 + 2, a!map()),
+                      local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
+                      local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
+                      local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
+                      a!cardLayout(contents: {
+                        a!sideBySideLayout( items: {
+                          a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", size: "SMALL", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE"),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                        }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "LESS", spacing: "DENSE"),
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "NONE", spacing: "DENSE")
+                      }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    )),
+                    a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!drivers),
+                    a!localVariables(
+                      local!d: index(local!drivers, (fv!index - 1) * 3 + 3, a!map()),
+                      local!yearsLeft: (tointeger(local!d.licYear) + 5) - local!currentYear,
+                      local!renewalText: if(local!yearsLeft < 0, "Expired", if(local!yearsLeft = 0, "Expires this yr", if(local!yearsLeft = 1, "1 yr left", tostring(local!yearsLeft) & " yrs left"))),
+                      local!renewalColor: if(local!yearsLeft < 1, "#991B1B", if(local!yearsLeft = 1, "#92400E", "#117C00")),
+                      a!cardLayout(contents: {
+                        a!sideBySideLayout( items: {
+                          a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!d.fullName, size: "SMALL", style: "STRONG"), marginBelow: "NONE")),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: " " & local!d.sex & " ", size: "SMALL", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE"),
+                          a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
+                        }, marginBelow: "LESS",alignVertical: "MIDDLE"),
+                        a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
+                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "LESS", spacing: "DENSE"),
+                        a!columnsLayout(columns: {
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        }, marginBelow: "NONE", spacing: "DENSE")
+                      }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
+                    ), {}
+                    ))
+                  }, marginBelow: "LESS", spacing: "STANDARD"
+                )
+              ),
+              /* DRIVER GRID */
+              a!gridField(labelPosition: "COLLAPSED", data: local!drivers, columns: {
+                a!gridColumn(label: "Full Name", value: fv!row.fullName),
+                a!gridColumn(label: "Sex", value: fv!row.sex, width: "ICON_PLUS"),
+                a!gridColumn(label: "DOB", value: fv!row.dob, width: "NARROW"),
+                a!gridColumn(label: "Marital Status", value: fv!row.maritalStatus, width: "NARROW"),
+                a!gridColumn(label: "License #", value: fv!row.licNum),
+                a!gridColumn(label: "State", value: fv!row.stateLic, width: "ICON_PLUS"),
+                a!gridColumn(label: "Experience", value: fv!row.yrsExp & " yrs", width: "NARROW"),
+                a!gridColumn(label: "Date Hired", value: fv!row.dateHired, width: "NARROW"),
+                a!gridColumn(label: "Yr LIC / Renewal", value: a!localVariables(
+                  local!yl: (tointeger(fv!row.licYear) + 5) - local!currentYear,
+                  fv!row.licYear & " · " & if(local!yl < 0, "Expired", if(local!yl = 0, "Expires this yr", if(local!yl = 1, "1 yr left", tostring(local!yl) & " yrs left")))
+                ))
+              }, pageSize: 100)
               )
-              }
+            }
             )
-          }
+          },
+          width: "AUTO",
+          backgroundColor: "#FAFAFC",
+          padding: "STANDARD"
         )
       },
       showPaneDividers: true
