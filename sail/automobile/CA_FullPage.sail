@@ -171,7 +171,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "LESS", spacing: "DENSE"),
                             a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       )),
                       a!columnLayout(contents: if(((fv!index - 1) * 3 + 2) <= count(local!vehicles),
@@ -190,7 +190,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "LESS", spacing: "DENSE"),
                             a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       )),
                       a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!vehicles),
@@ -209,7 +209,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!v.costNew, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "LESS", spacing: "DENSE"),
                             a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       ))
                     }, spacing: "STANDARD", marginBelow: "LESS"
@@ -290,7 +290,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       )),
                       /* Columns 2 & 3 follow same pattern */
@@ -318,7 +318,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       )),
                       a!columnLayout(contents: if(((fv!index - 1) * 3 + 3) <= count(local!drivers),
@@ -345,7 +345,7 @@ a!localVariables(
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.dateHired, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "CENTER")}),
                               a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", color: "SECONDARY", size: "SMALL"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, color: local!renewalColor, style: "STRONG", size: "SMALL")}, marginBelow: "NONE", align: "RIGHT")})
                             }, marginBelow: "NONE", spacing: "DENSE")
-                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FFFFFF")
+                          }, padding: "STANDARD", shape: "SEMI_ROUNDED", showBorder: false, showShadow: true, style: "#FAFAFC")
                         ), {}
                       ))
                     }, spacing: "STANDARD", marginBelow: "LESS"
