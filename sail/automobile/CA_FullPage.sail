@@ -186,7 +186,7 @@ a!localVariables(
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                       }, marginBelow: "LESS", spacing: "DENSE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
                     }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
@@ -205,7 +205,7 @@ a!localVariables(
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                       }, marginBelow: "LESS", spacing: "DENSE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
                     }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
@@ -224,7 +224,7 @@ a!localVariables(
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                        a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "COST NEW", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.costNew, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                       }, marginBelow: "LESS", spacing: "DENSE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: local!v.coverages, size: "SMALL", color: "ACCENT"), marginBelow: "NONE")
                     }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
@@ -301,13 +301,13 @@ a!localVariables(
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "LESS", spacing: "DENSE"),
                         /* DOB | Hired | Yr LIC / Renewal */
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "NONE", spacing: "DENSE")
                       }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
                     ), {}
@@ -330,12 +330,12 @@ a!localVariables(
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "LESS", spacing: "DENSE"),
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "NONE", spacing: "DENSE")
                       }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
                     ), {}
@@ -357,12 +357,12 @@ a!localVariables(
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "EXPERIENCE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.yrsExp & " yrs", size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "LESS", spacing: "DENSE"),
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "DOB", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dob, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "HIRED", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.dateHired, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
-                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "RIGHT")})
+                          a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "YR LIC / RENEWAL", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licYear & " · " & local!renewalText, size: "SMALL", color: local!renewalColor, style: "STRONG")}, marginBelow: "NONE", align: "END")})
                         }, marginBelow: "NONE", spacing: "DENSE")
                       }, style: "#FFFFFF", showShadow: true, showBorder: false, padding: "STANDARD", shape: "SEMI_ROUNDED")
                     ), {}
