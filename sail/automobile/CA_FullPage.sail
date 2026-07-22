@@ -124,28 +124,28 @@ a!localVariables(
             if(local!activeNav = "vehicles",
               /* ========== VEHICLE PANE ========== */
               {
-                /* Header */
+                /* Row 1: Title + Add + Edit */
                 a!sideBySideLayout(
                   alignVertical: "MIDDLE",
                   items: {
                     a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Vehicle Information", style: "STRONG", size: "MEDIUM", color: "SECONDARY"), marginBelow: "NONE")),
                     a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
                     a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Vehicle", icon: "plus", size: "SMALL", style: "SOLID"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
-                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
-                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
-                    }, marginBelow: "NONE"))
+                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE"))
                   },
                   marginBelow: "STANDARD"
                 ),
-                /* Search + Filters */
+                /* Row 2: Search + Filters + Cards/Grid toggle */
                 a!sideBySideLayout(
                   alignVertical: "MIDDLE", spacing: "STANDARD",
                   items: {
                     a!sideBySideItem(width: "MINIMIZE", item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search vehicles...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS")),
                     a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Body Type", choiceLabels: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}, choiceValues: {"Van","Truck","Sedan","SUV","Semi","Box Truck"}, value: local!filterBodyType, saveInto: local!filterBodyType)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}, value: local!filterState, saveInto: local!filterState))
+                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}, value: local!filterState, saveInto: local!filterState)),
+                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
+                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
+                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
+                    }, marginBelow: "NONE"))
                   },
                   marginBelow: "STANDARD"
                 ),
@@ -230,28 +230,28 @@ a!localVariables(
 
               /* ========== DRIVER PANE ========== */
               {
-                /* Header */
+                /* Row 1: Title + Add + Edit */
                 a!sideBySideLayout(
                   alignVertical: "MIDDLE",
                   items: {
                     a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextItem(text: "Driver Information", style: "STRONG", size: "MEDIUM", color: "SECONDARY"), marginBelow: "NONE")),
                     a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
                     a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Driver", icon: "plus", size: "SMALL", style: "SOLID"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE")),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
-                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
-                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
-                    }, marginBelow: "NONE"))
+                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", icon: "pencil", size: "SMALL", style: "OUTLINE"), marginBelow: "NONE"))
                   },
                   marginBelow: "STANDARD"
                 ),
-                /* Search + Filters */
+                /* Row 2: Search + Filters + Cards/Grid toggle */
                 a!sideBySideLayout(
                   alignVertical: "MIDDLE", spacing: "STANDARD",
                   items: {
                     a!sideBySideItem(width: "MINIMIZE", item: a!textField(labelPosition: "COLLAPSED", placeholder: "Search drivers...", value: local!searchText, saveInto: local!searchText, refreshAfter: "KEYPRESS")),
                     a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "State LIC", choiceLabels: {"TX","CA","IL","FL","NY"}, choiceValues: {"TX","CA","IL","FL","NY"}, value: local!filterState, saveInto: local!filterState)),
-                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Experience", choiceLabels: {"0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"}, choiceValues: {"0-5","6-10","11-15","16-20","20+"}, value: local!filterExp, saveInto: local!filterExp))
+                    a!sideBySideItem(width: "MINIMIZE", item: a!dropdownField(labelPosition: "COLLAPSED", placeholder: "Experience", choiceLabels: {"0-5 yrs","6-10 yrs","11-15 yrs","16-20 yrs","20+ yrs"}, choiceValues: {"0-5","6-10","11-15","16-20","20+"}, value: local!filterExp, saveInto: local!filterExp)),
+                    a!sideBySideItem(width: "MINIMIZE", item: a!buttonArrayLayout(buttons: {
+                      a!buttonWidget(label: "Cards", icon: "th-large", size: "SMALL", style: if(local!activeView = "cards", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "cards")),
+                      a!buttonWidget(label: "Grid", icon: "bars", size: "SMALL", style: if(local!activeView = "grid", "SOLID", "OUTLINE"), saveInto: a!save(local!activeView, "grid"))
+                    }, marginBelow: "NONE"))
                   },
                   marginBelow: "STANDARD"
                 ),
