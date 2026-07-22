@@ -121,10 +121,11 @@ a!localVariables(
             if(local!activeNav = "vehicles",
             /* ========== VEHICLE PANE ========== */
             {
-              /* Row 1: Title + Add + Edit */
+              /* Row 0: Heading */
+              a!sectionLayout(label: "Vehicle Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {}),
+              /* Row 1: Add + Edit */
               a!sideBySideLayout(
                 items: {
-                  a!sideBySideItem(item: a!sectionLayout(label: "Vehicle Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {})),
                   a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
                   a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Vehicle", size: "SMALL", icon: "plus", style: "SOLID"), marginBelow: "NONE"),width: "MINIMIZE"),
                   a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", size: "SMALL", icon: "pencil", style: "OUTLINE"), marginBelow: "NONE"),width: "MINIMIZE")
@@ -247,10 +248,11 @@ a!localVariables(
 
             /* ========== DRIVER PANE ========== */
             {
-              /* Row 1: Title + Add + Edit */
+              /* Row 0: Heading */
+              a!sectionLayout(label: "Driver Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {}),
+              /* Row 1: Add + Edit */
               a!sideBySideLayout(
                 items: {
-                  a!sideBySideItem(item: a!sectionLayout(label: "Driver Information", labelSize: "MEDIUM", labelColor: "SECONDARY", contents: {})),
                   a!sideBySideItem(item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE")),
                   a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Add Driver", size: "SMALL", icon: "plus", style: "SOLID"), marginBelow: "NONE"),width: "MINIMIZE"),
                   a!sideBySideItem( item: a!buttonArrayLayout(buttons: a!buttonWidget(label: "Edit Details", size: "SMALL", icon: "pencil", style: "OUTLINE"), marginBelow: "NONE"),width: "MINIMIZE")
