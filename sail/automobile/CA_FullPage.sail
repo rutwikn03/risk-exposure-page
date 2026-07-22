@@ -75,7 +75,7 @@ a!localVariables(
       },
       marginBelow: "NONE", style: "#ffffff", showBorder: false, padding: "NONE"
     ),
-    a!horizontalLine(marginBelow: "NONE", color: "#cccccc"),
+    a!richTextDisplayField(labelPosition: "COLLAPSED", value: "", marginBelow: "NONE"),
 
     /* ===== MAIN LAYOUT: Left Nav + Right Content ===== */
     a!paneLayout(
@@ -182,7 +182,6 @@ a!localVariables(
                         a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
                       }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
@@ -201,7 +200,6 @@ a!localVariables(
                         a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
                       }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
@@ -220,7 +218,6 @@ a!localVariables(
                         a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
                       }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                       a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!v.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                      a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                       a!columnsLayout(columns: {
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "VIN", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.vin, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                         a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!v.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
@@ -296,7 +293,6 @@ a!localVariables(
                         }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                         /* Address */
                         a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                         /* License # | State | Experience */
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
@@ -326,7 +322,6 @@ a!localVariables(
                           a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
                         }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                         a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
@@ -353,7 +348,6 @@ a!localVariables(
                           a!sideBySideItem( item: a!richTextDisplayField(labelPosition: "COLLAPSED", value: a!richTextIcon(icon: "ellipsis-v", color: "SECONDARY"), marginBelow: "NONE"),width: "MINIMIZE")
                         }, marginBelow: "LESS",alignVertical: "MIDDLE"),
                         a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextIcon(icon: "map-marker", color: "SECONDARY"), a!richTextItem(text: " " & local!d.address, size: "SMALL", color: "SECONDARY")}, marginBelow: "LESS"),
-                        a!horizontalLine(marginBelow: "LESS", color: "#F0F0F5"),
                         a!columnsLayout(columns: {
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "LICENSE #", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.licNum, size: "SMALL", style: "STRONG")}, marginBelow: "NONE")}),
                           a!columnLayout(contents: {a!richTextDisplayField(labelPosition: "COLLAPSED", value: {a!richTextItem(text: "STATE", size: "SMALL", color: "SECONDARY"), char(10), a!richTextItem(text: local!d.stateLic, size: "SMALL", style: "STRONG")}, marginBelow: "NONE", align: "CENTER")}),
@@ -390,7 +384,6 @@ a!localVariables(
             )
           },
           width: "AUTO",
-          backgroundColor: "#FAFAFC",
           padding: "STANDARD"
         )
       },
